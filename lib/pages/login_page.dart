@@ -14,7 +14,7 @@ class login_page extends StatelessWidget {
             children: const [
               SizedBox(height: 50,),
               Text(
-                  "Huddle",
+                  "Huddle --alpha",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold ),
 
