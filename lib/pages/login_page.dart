@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:huddle/components/Text_Field.dart';
 class login_page extends StatelessWidget {
   const login_page({Key? key}) : super(key: key);
-
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,9 +20,17 @@ class login_page extends StatelessWidget {
 
               ),
               SizedBox(height: 50,),
-              text_field(),
+              text_field(
+                controller: usernameController,
+                hintText: "user name",
+                obsecureText: false,
+              ),
               SizedBox(height: 10,),
-              text_field(),
+              text_field(
+                controller: passwordController,
+                hintText: "password",
+                obsecureText: true,
+              ),
 
             ],
           ),
