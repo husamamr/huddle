@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
-import 'pages/login_page.dart';
+import 'package:flutter/services.dart';
+import 'package:huddle/routes/app_routes.dart';
+
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      home: login_page(),
+      theme: ThemeData(
+        visualDensity: VisualDensity.standard,
+      ),
+      title: 'huddle',
+      debugShowCheckedModeBanner: false,
+      initialRoute: AppRoutes.appNavigationScreen,
+      routes: AppRoutes.routes,
     );
   }
 }
-
