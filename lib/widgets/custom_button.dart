@@ -92,6 +92,7 @@ class CustomButton extends StatelessWidget {
       ),
       padding: _setPadding(),
       backgroundColor: _setColor(),
+      side: _setTextButtonBorder(),
       shape: RoundedRectangleBorder(
         borderRadius: _setBorderRadius(),
       ),
@@ -100,17 +101,41 @@ class CustomButton extends StatelessWidget {
 
   _setPadding() {
     switch (padding) {
+      case ButtonPadding.PaddingAll14:
+        return getPadding(
+          all: 14,
+        );
       default:
         return getPadding(
-          all: 7,
+          top: 14,
+          right: 14,
+          bottom: 14,
         );
     }
   }
 
   _setColor() {
     switch (variant) {
+      case ButtonVariant.FillBlueA700:
+        return ColorConstant.blueA700;
+      case ButtonVariant.OutlineBlueA700:
+        return null;
       default:
-        return ColorConstant.gray300;
+        return null;
+    }
+  }
+
+  _setTextButtonBorder() {
+    switch (variant) {
+      case ButtonVariant.FillBlueA700:
+        return null;
+      default:
+        return BorderSide(
+          color: ColorConstant.blueA700,
+          width: getHorizontalSize(
+            1.00,
+          ),
+        );
     }
   }
 
@@ -121,7 +146,7 @@ class CustomButton extends StatelessWidget {
       default:
         return BorderRadius.circular(
           getHorizontalSize(
-            10.00,
+            6.00,
           ),
         );
     }
@@ -129,14 +154,23 @@ class CustomButton extends StatelessWidget {
 
   _setFontStyle() {
     switch (fontStyle) {
+      case ButtonFontStyle.GilroyMedium16:
+        return TextStyle(
+          color: ColorConstant.whiteA700,
+          fontSize: getFontSize(
+            16,
+          ),
+          fontFamily: 'Gilroy',
+          fontWeight: FontWeight.w500,
+        );
       default:
         return TextStyle(
-          color: ColorConstant.black900,
+          color: ColorConstant.blueA700,
           fontSize: getFontSize(
-            24,
+            16,
           ),
-          fontFamily: 'Lato',
-          fontWeight: FontWeight.w400,
+          fontFamily: 'Gilroy',
+          fontWeight: FontWeight.w500,
         );
     }
   }
@@ -144,17 +178,20 @@ class CustomButton extends StatelessWidget {
 
 enum ButtonShape {
   Square,
-  RoundedBorder10,
+  RoundedBorder6,
 }
 
 enum ButtonPadding {
-  PaddingAll7,
+  PaddingT14,
+  PaddingAll14,
 }
 
 enum ButtonVariant {
-  FillGray300,
+  OutlineBlueA700,
+  FillBlueA700,
 }
 
 enum ButtonFontStyle {
-  LatoRegular24,
+  GilroyMedium16BlueA700,
+  GilroyMedium16,
 }

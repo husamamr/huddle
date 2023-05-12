@@ -110,56 +110,24 @@ class CustomTextFormField extends StatelessWidget {
 
   _setFontStyle() {
     switch (fontStyle) {
-      case TextFormFieldFontStyle.RobotoRegular16:
+      default:
         return TextStyle(
-          color: ColorConstant.black90001,
+          color: ColorConstant.blueGray200,
           fontSize: getFontSize(
             16,
           ),
-          fontFamily: 'Roboto',
-          fontWeight: FontWeight.w400,
-        );
-      default:
-        return TextStyle(
-          color: ColorConstant.whiteA700,
-          fontSize: getFontSize(
-            18,
-          ),
-          fontFamily: 'League Spartan',
-          fontWeight: FontWeight.w400,
+          fontFamily: 'Gilroy',
+          fontWeight: FontWeight.w500,
         );
     }
   }
 
   _setOutlineBorderRadius() {
     switch (shape) {
-      case TextFormFieldShape.CustomBorderTL20:
-        return BorderRadius.only(
-          topLeft: Radius.circular(
-            getHorizontalSize(
-              20.00,
-            ),
-          ),
-          topRight: Radius.circular(
-            getHorizontalSize(
-              20.00,
-            ),
-          ),
-          bottomLeft: Radius.circular(
-            getHorizontalSize(
-              0.00,
-            ),
-          ),
-          bottomRight: Radius.circular(
-            getHorizontalSize(
-              0.00,
-            ),
-          ),
-        );
       default:
         return BorderRadius.circular(
           getHorizontalSize(
-            10.00,
+            6.00,
           ),
         );
     }
@@ -167,34 +135,28 @@ class CustomTextFormField extends StatelessWidget {
 
   _setBorderStyle() {
     switch (variant) {
-      case TextFormFieldVariant.FillGray1001e:
-        return OutlineInputBorder(
-          borderRadius: _setOutlineBorderRadius(),
-          borderSide: BorderSide.none,
-        );
       case TextFormFieldVariant.None:
         return InputBorder.none;
       default:
         return OutlineInputBorder(
           borderRadius: _setOutlineBorderRadius(),
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(
+            color: ColorConstant.blueGray100,
+            width: 1,
+          ),
         );
     }
   }
 
   _setFillColor() {
     switch (variant) {
-      case TextFormFieldVariant.FillGray1001e:
-        return ColorConstant.gray1001e;
       default:
-        return ColorConstant.gray400Cc;
+        return ColorConstant.whiteA700;
     }
   }
 
   _setFilled() {
     switch (variant) {
-      case TextFormFieldVariant.FillGray1001e:
-        return true;
       case TextFormFieldVariant.None:
         return false;
       default:
@@ -204,30 +166,34 @@ class CustomTextFormField extends StatelessWidget {
 
   _setPadding() {
     switch (padding) {
+      case TextFormFieldPadding.PaddingT12:
+        return getPadding(
+          left: 12,
+          top: 12,
+          bottom: 12,
+        );
       default:
         return getPadding(
-          all: 18,
+          all: 11,
         );
     }
   }
 }
 
 enum TextFormFieldShape {
-  RoundedBorder10,
-  CustomBorderTL20,
+  RoundedBorder6,
 }
 
 enum TextFormFieldPadding {
-  PaddingAll18,
+  PaddingAll11,
+  PaddingT12,
 }
 
 enum TextFormFieldVariant {
   None,
-  FillGray400cc,
-  FillGray1001e,
+  OutlineBluegray100,
 }
 
 enum TextFormFieldFontStyle {
-  LeagueSpartanRegular18,
-  RobotoRegular16,
+  GilroyMedium16,
 }

@@ -2,75 +2,75 @@ import 'package:flutter/material.dart';
 import 'package:huddle/core/app_export.dart';
 
 class AppStyle {
-  static TextStyle txtRobotoRomanRegular16 = TextStyle(
-    color: ColorConstant.black90001,
-    fontSize: getFontSize(
-      16,
-    ),
-    fontFamily: 'Roboto',
-    fontWeight: FontWeight.w400,
-  );
-
-  static TextStyle txtIndieFlowerRegular34 = TextStyle(
-    color: ColorConstant.whiteA700,
-    fontSize: getFontSize(
-      34,
-    ),
-    fontFamily: 'Indie Flower',
-    fontWeight: FontWeight.w400,
-  );
-
-  static TextStyle txtKarlaRegular20 = TextStyle(
-    color: ColorConstant.whiteA700,
-    fontSize: getFontSize(
-      20,
-    ),
-    fontFamily: 'Karla',
-    fontWeight: FontWeight.w400,
-  );
-
-  static TextStyle txtRobotoRegular16 = TextStyle(
-    color: ColorConstant.blueGray400,
-    fontSize: getFontSize(
-      16,
-    ),
-    fontFamily: 'Roboto',
-    fontWeight: FontWeight.w400,
-  );
-
-  static TextStyle txtImprimaRegular34 = TextStyle(
-    color: ColorConstant.whiteA700,
-    fontSize: getFontSize(
-      34,
-    ),
-    fontFamily: 'Imprima',
-    fontWeight: FontWeight.w400,
-  );
-
-  static TextStyle txtImprimaRegular24 = TextStyle(
-    color: ColorConstant.black900,
+  static TextStyle txtGilroySemiBold24 = TextStyle(
+    color: ColorConstant.blueGray900,
     fontSize: getFontSize(
       24,
     ),
-    fontFamily: 'Imprima',
+    fontFamily: 'Gilroy',
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle txtGilroyMedium14 = TextStyle(
+    color: ColorConstant.blueA700,
+    fontSize: getFontSize(
+      14,
+    ),
+    fontFamily: 'Gilroy',
+    fontWeight: FontWeight.w500,
+  );
+
+  static TextStyle txtGilroyRegular16Gray900 = TextStyle(
+    color: ColorConstant.gray900,
+    fontSize: getFontSize(
+      16,
+    ),
+    fontFamily: 'Gilroy',
     fontWeight: FontWeight.w400,
   );
 
-  static TextStyle txtInriaSerifRegular12 = TextStyle(
-    color: ColorConstant.whiteA700,
+  static TextStyle txtGilroyRegular16 = TextStyle(
+    color: ColorConstant.blueGray200,
     fontSize: getFontSize(
-      12,
+      16,
     ),
-    fontFamily: 'Inria Serif',
+    fontFamily: 'Gilroy',
     fontWeight: FontWeight.w400,
   );
 
-  static TextStyle txtRobotoRegular20 = TextStyle(
-    color: ColorConstant.black900,
+  static TextStyle txtGilroyMedium16 = TextStyle(
+    color: ColorConstant.blueGray900,
     fontSize: getFontSize(
-      20,
+      16,
     ),
-    fontFamily: 'Roboto',
+    fontFamily: 'Gilroy',
+    fontWeight: FontWeight.w500,
+  );
+
+  static TextStyle txtGilroyBold24 = TextStyle(
+    color: ColorConstant.blueGray900,
+    fontSize: getFontSize(
+      24,
+    ),
+    fontFamily: 'Gilroy',
+    fontWeight: FontWeight.w700,
+  );
+
+  static TextStyle txtGilroySemiBold18 = TextStyle(
+    color: ColorConstant.blueGray900,
+    fontSize: getFontSize(
+      18,
+    ),
+    fontFamily: 'Gilroy',
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle txtGilroyRegular14 = TextStyle(
+    color: ColorConstant.blueGray400,
+    fontSize: getFontSize(
+      14,
+    ),
+    fontFamily: 'Gilroy',
     fontWeight: FontWeight.w400,
   );
 }
