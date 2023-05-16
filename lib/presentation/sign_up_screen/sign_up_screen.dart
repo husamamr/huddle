@@ -104,6 +104,7 @@ class SignUpScreen extends StatelessWidget {
                                   textAlign: TextAlign.left,
                                   style: AppStyle.txtGilroyMedium16)),
                           CustomTextFormField(
+                              maxLen: 10,
                               focusNode: FocusNode(),
                               controller: group10198ThreeController,
                               hintText: "Enter Mobile Number",

@@ -20,6 +20,7 @@ class CustomTextFormField extends StatelessWidget {
       this.prefix,
       this.prefixConstraints,
       this.suffix,
+      this.maxLen,
       this.suffixConstraints,
       this.validator});
 
@@ -38,6 +39,8 @@ class CustomTextFormField extends StatelessWidget {
   EdgeInsetsGeometry? margin;
 
   TextEditingController? controller;
+
+  int? maxLen;
 
   FocusNode? focusNode;
 
@@ -76,9 +79,10 @@ class CustomTextFormField extends StatelessWidget {
       width: width ?? double.maxFinite,
       margin: margin,
       child: TextFormField(
+        maxLength: maxLen,
         controller: controller,
         focusNode: focusNode,
-        style: _setFontStyle(),
+        style: _setFontStyle(color: Colors.black),
         obscureText: isObscureText!,
         textInputAction: textInputAction,
         keyboardType: textInputType,
@@ -92,7 +96,7 @@ class CustomTextFormField extends StatelessWidget {
   _buildDecoration() {
     return InputDecoration(
       hintText: hintText ?? "",
-      hintStyle: _setFontStyle(),
+      hintStyle: _setFontStyle(color: ColorConstant.blueGray200),
       border: _setBorderStyle(),
       enabledBorder: _setBorderStyle(),
       focusedBorder: _setBorderStyle(),
@@ -108,11 +112,11 @@ class CustomTextFormField extends StatelessWidget {
     );
   }
 
-  _setFontStyle() {
+  _setFontStyle({required Color color}) {
     switch (fontStyle) {
       default:
         return TextStyle(
-          color: ColorConstant.blueGray200,
+          color: color,
           fontSize: getFontSize(
             16,
           ),
