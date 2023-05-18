@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:huddle/core/app_export.dart';
+import 'package:huddle/presentation/sign_up_screens/sign_up_screen_preferences.dart';
 import 'package:huddle/widgets/app_bar/custom_app_bar.dart';
 import 'package:huddle/widgets/custom_button.dart';
 import 'package:huddle/widgets/custom_text_form_field.dart';
-// ignore_for_file: must_be_immutable
-
-// ignore_for_file: must_be_immutable
-
-// ignore_for_file: must_be_immutable
-
-// ignore_for_file: must_be_immutable
-
-// ignore_for_file: must_be_immutable
-
 // ignore_for_file: must_be_immutable
 class SignUpScreen extends StatelessWidget {
   TextEditingController group10198Controller = TextEditingController();
@@ -134,7 +125,16 @@ class SignUpScreen extends StatelessWidget {
                           CustomButton(
                               height: getVerticalSize(50),
                               text: "Next",
-                              margin: getMargin(top: 24, bottom: 5))
+                              margin: getMargin(top: 24, bottom: 5),
+                              onTap: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PreferencesScreen()
+                                  ),
+                                );
+                              },
+                          )
                         ])))));
   }
 
