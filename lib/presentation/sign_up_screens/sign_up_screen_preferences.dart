@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huddle/core/app_export.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:huddle/widgets/app_bar/custom_app_bar.dart';
 
 
@@ -18,8 +19,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
             backgroundColor: ColorConstant.gray50,
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
+              backgroundColor: Color.fromRGBO(144,192,206, 1),
                 leadingWidth: 40,
-
                 centerTitle: true,
                 title: Text("Preference",
                     overflow: TextOverflow.ellipsis,
@@ -52,71 +53,307 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                           print("Food");
                         },
                         child: Container(
-                          padding: const EdgeInsets.all(8),
+                          height: 141,
+                          width: 114,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(154, 194, 149, 1),
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                            //border: Colors.black,
+                            border: Border.all(
+                              color: Color.fromRGBO(154, 194, 149, 1),
+                              width: 2,
+                            ),
+                          ),
+
+                          child: Card(
+                              elevation: 0,
+                              color: Color.fromRGBO(154, 194, 149, 1),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                              child: Column(
+                                  children: <Widget>[
+                                    Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Icon(
+                                      Icons.fastfood,
+                                      size: 75,
+                                      color: Color.fromRGBO(203, 203, 203, 1),
+                                      )
+                                    ),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 3.0),
+                                        child: Text(
+                                          'Food',
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 20
+                                          ),
+                                          //textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                              )
+                          )
+
+
+                          /*padding: const EdgeInsets.all(8),
                           color: Colors.teal[100],
-                          child: const Text("Food"),
+                          child: const Text("Food"),*/
                         ),
                       ),
+
                       GestureDetector(
                         onTap: (){
-                          print("Art & Museums");
+                          print("Art & Museum");
                         },
                         child: Container(
-                          padding: const EdgeInsets.all(8),
-                          color: Colors.teal[200],
-                          child: const Text('Art & Museums'),
+                            height: 141,
+                            width: 114,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(154, 194, 149, 1),
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                              //border: Colors.black,
+                              border: Border.all(
+                                color: Color.fromRGBO(154, 194, 149, 1),
+                                width: 2,
+                              ),
+                            ),
+
+                            child: Card(
+                                elevation: 0,
+                                color: Color.fromRGBO(154, 194, 149, 1),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                                child: Column(
+                                  children: <Widget>[
+                                    Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Icon(
+                                          Icons.brush,
+                                          size: 75,
+                                          color: Color.fromRGBO(203, 203, 203, 1),
+                                        )
+                                    ),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 3.0),
+                                        child: Text(
+                                          'Art & Museums',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 17
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                            )
                         ),
                       ),
+
                       GestureDetector(
                         onTap: (){
                           print("Sports");
                         },
                         child: Container(
-                          padding: const EdgeInsets.all(8),
-                          color: Colors.teal[300],
-                          child: const Text('Sports'),
+                            height: 141,
+                            width: 114,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(154, 194, 149, 1),
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                              //border: Colors.black,
+                              border: Border.all(
+                                color: Color.fromRGBO(154, 194, 149, 1),
+                                width: 2,
+                              ),
+                            ),
+
+                            child: Card(
+                                elevation: 0,
+                                color: Color.fromRGBO(154, 194, 149, 1),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                                child: Column(
+                                  children: <Widget>[
+                                    Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Icon(
+                                          Icons.sports_soccer,
+                                          size: 75,
+                                          color: Color.fromRGBO(203, 203, 203, 1),
+                                        )
+                                    ),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 3.0),
+                                        child: Text(
+                                          'Sports',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 20
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                            )
                         ),
                       ),
+
                       GestureDetector(
                         onTap: (){
                           print("Movies");
                         },
                         child: Container(
-                          padding: const EdgeInsets.all(8),
-                          color: Colors.teal[400],
-                          child: const Text('Movies'),
+                            height: 141,
+                            width: 114,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(154, 194, 149, 1),
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                              //border: Colors.black,
+                              border: Border.all(
+                                color: Color.fromRGBO(154, 194, 149, 1),
+                                width: 2,
+                              ),
+                            ),
+
+                            child: Card(
+                                elevation: 0,
+                                color: Color.fromRGBO(154, 194, 149, 1),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                                child: Column(
+                                  children: <Widget>[
+                                    Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Icon(
+                                          Icons.movie,
+                                          size: 75,
+                                          color: Color.fromRGBO(203, 203, 203, 1),
+                                        )
+                                    ),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 3.0),
+                                        child: Text(
+                                          'Movies',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 20
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                            )
                         ),
                       ),
+
                       GestureDetector(
                         onTap: (){
                           print("Festivals");
                         },
                         child: Container(
-                          padding: const EdgeInsets.all(8),
-                          color: Colors.teal[500],
-                          child: const Text('Festivals'),
+                            height: 141,
+                            width: 114,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(154, 194, 149, 1),
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                              //border: Colors.black,
+                              border: Border.all(
+                                color: Color.fromRGBO(154, 194, 149, 1),
+                                width: 2,
+                              ),
+                            ),
+
+                            child: Card(
+                                elevation: 0,
+                                color: Color.fromRGBO(154, 194, 149, 1),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                                child: Column(
+                                  children: <Widget>[
+                                    Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Icon(
+                                          Icons.festival_rounded,
+                                          size: 75,
+                                          color: Color.fromRGBO(203, 203, 203, 1),
+                                        )
+                                    ),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 3.0),
+                                        child: Text(
+                                          'Festivals',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 20
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                            )
                         ),
                       ),
+
                       GestureDetector(
                         onTap: (){
                           print("Games");
                         },
                         child: Container(
-                          padding: const EdgeInsets.all(8),
-                          color: Colors.teal[600],
-                          child: const Text('Games'),
+                            height: 141,
+                            width: 114,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(154, 194, 149, 1),
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                              //border: Colors.black,
+                              border: Border.all(
+                                color: Color.fromRGBO(154, 194, 149, 1),
+                                width: 2,
+                              ),
+                            ),
+
+                            child: Card(
+                                elevation: 0,
+                                color: Color.fromRGBO(154, 194, 149, 1),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                                child: Column(
+                                  children: <Widget>[
+                                    Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Icon(
+                                          Icons.sports_esports,
+                                          size: 75,
+                                          color: Color.fromRGBO(203, 203, 203, 1),
+                                        )
+                                    ),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 3.0),
+                                        child: Text(
+                                          'Games',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 20
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                            )
                         ),
                       ),
+
                     ],
                   ),
-                )
+                ),
               ],
-            )
+            ),
         )
-
-        /*CustomScrollView(
-
-        )*/
 
     );
   }
