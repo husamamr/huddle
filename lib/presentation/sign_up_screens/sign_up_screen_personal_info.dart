@@ -6,15 +6,15 @@ import 'package:huddle/widgets/custom_button.dart';
 import 'package:huddle/widgets/custom_text_form_field.dart';
 // ignore_for_file: must_be_immutable
 class SignUpScreen extends StatelessWidget {
-  TextEditingController group10198Controller = TextEditingController();
+  TextEditingController _firstNameController = TextEditingController();
 
-  TextEditingController group10198OneController = TextEditingController();
+  TextEditingController _lastNameController = TextEditingController();
 
-  TextEditingController group10198TwoController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
 
-  TextEditingController group10198ThreeController = TextEditingController();
+  TextEditingController _mobileNumberController = TextEditingController();
 
-  TextEditingController group10198FourController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -62,7 +62,7 @@ class SignUpScreen extends StatelessWidget {
                                   style: AppStyle.txtGilroyMedium16)),
                           CustomTextFormField(
                               focusNode: FocusNode(),
-                              controller: group10198Controller,
+                              controller: _firstNameController,
                               hintText: "Enter First Name",
                               margin: getMargin(top: 8)),
                           Padding(
@@ -73,7 +73,7 @@ class SignUpScreen extends StatelessWidget {
                                   style: AppStyle.txtGilroyMedium16)),
                           CustomTextFormField(
                               focusNode: FocusNode(),
-                              controller: group10198OneController,
+                              controller: _lastNameController,
                               hintText: "Enter Last Name",
                               margin: getMargin(top: 7)),
                           Padding(
@@ -84,7 +84,7 @@ class SignUpScreen extends StatelessWidget {
                                   style: AppStyle.txtGilroyMedium16)),
                           CustomTextFormField(
                               focusNode: FocusNode(),
-                              controller: group10198TwoController,
+                              controller: _emailController,
                               hintText: "Enter Email Id",
                               margin: getMargin(top: 8),
                               textInputType: TextInputType.emailAddress),
@@ -97,7 +97,7 @@ class SignUpScreen extends StatelessWidget {
                           CustomTextFormField(
                               maxLen: 10,
                               focusNode: FocusNode(),
-                              controller: group10198ThreeController,
+                              controller: _mobileNumberController,
                               hintText: "Enter Mobile Number",
                               margin: getMargin(top: 8),
                               textInputType: TextInputType.phone),
@@ -109,7 +109,7 @@ class SignUpScreen extends StatelessWidget {
                                   style: AppStyle.txtGilroyMedium16)),
                           CustomTextFormField(
                               focusNode: FocusNode(),
-                              controller: group10198FourController,
+                              controller: _passwordController,
                               hintText: "Enter Password",
                               margin: getMargin(top: 7),
                               padding: TextFormFieldPadding.PaddingT12,
@@ -135,7 +135,12 @@ class SignUpScreen extends StatelessWidget {
                                 );
                               },
                           )
-                        ])))));
+                        ]
+                    )
+                )
+            )
+        )
+    );
   }
 
   onTapImgArrowleft(BuildContext context) {
