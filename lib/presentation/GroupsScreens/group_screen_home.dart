@@ -52,7 +52,9 @@ class _GroupScreenState extends State<GroupScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          //Todo:  push for groups details page and send the id of group
+        },
         child: Container(
           decoration: BoxDecoration(
             color: const Color(0xFFfafbfc),

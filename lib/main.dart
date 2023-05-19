@@ -28,9 +28,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:huddle/routes/app_routes.dart';
 
+
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   //call test repo fucntion here
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
