@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:huddle/presentation/GroupsScreens/group_screen_home.dart';
 import 'package:huddle/presentation/HomeScreen/home_screen.dart';
 import 'package:huddle/presentation/SearchScreen/search_screen.dart';
+
+import '../../core/utils/color_constant.dart';
 
 class BottomBar extends StatefulWidget {
   BottomBar();
@@ -34,6 +37,7 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorConstant.gray50,
       body: PageView(
         controller: _pageController,
         onPageChanged: _onPageChanged,
@@ -44,7 +48,7 @@ class _BottomBarState extends State<BottomBar> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home,size: 35),
-            label: 'Home',
+            label: ('Home'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.groups,size: 35),
@@ -56,7 +60,9 @@ class _BottomBarState extends State<BottomBar> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.indigo,
+        selectedItemColor: ColorConstant.blueGray900,
+        selectedLabelStyle: GoogleFonts.poppins(),
+        unselectedLabelStyle: GoogleFonts.poppins(),
         onTap: _onItemTapped,
       ),
     );
