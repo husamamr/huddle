@@ -35,4 +35,6 @@ class ImageConstant {
       'assets/images/img_profileimglarge_50x50_7.png';
 
   static String imgOverflowmenu = 'assets/images/img_overflowmenu.svg';
+
+  static String imgMobile = 'assets/images/img_email.svg';
 }
