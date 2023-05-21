@@ -185,14 +185,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             text: "Next",
                             margin: getMargin(top: 24, bottom: 5),
 
-                            onTap: () async{
-
+                            onTap: () {
                               if (_formKey.currentState!.validate()== true) {
-                                String name = await getNameAPI();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => PreferencesScreen(name: name, formData: formData,),
+                                    builder: (context) => PreferencesScreen(formData: formData,),
                                   ),
                                 );
                               }

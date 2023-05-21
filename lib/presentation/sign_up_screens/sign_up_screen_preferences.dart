@@ -7,40 +7,53 @@ import 'package:huddle/widgets/app_bar/custom_app_bar.dart';
 
 
 class PreferencesScreen extends StatefulWidget {
-  final String name;
   Map<String, dynamic> formData = new Map<String, dynamic>();
 
-  PreferencesScreen({required this.name ,required this.formData});
+  PreferencesScreen({required this.formData});
   @override
-  State<PreferencesScreen> createState() => _PreferencesScreenState(name: name,formData:formData);
+  State<PreferencesScreen> createState() => _PreferencesScreenState(formData:formData);
 }
 
 class _PreferencesScreenState extends State<PreferencesScreen> {
-    final String name;
     Map<String, dynamic> formData = new Map<String, dynamic>();
-  _PreferencesScreenState({required this.name, required this.formData});
+  _PreferencesScreenState({required this.formData});
+
 
   @override
   void initState() {
     print(formData["email"]);
-    print(name.split(" ")[0]);
     super.initState();
   }
-    bool isClicked = false;
+    bool isClickedFood = false;
+    bool isClickedArt = false;
+    bool isClickedSports = false;
+    bool isClickedEntertainment = false;
+    bool isClickedFestivals = false;
+    bool isClickedGames = false;
+    List<String> pickedPref = [];
+
     void submitForm ()async{
+      pickedPref = [];
+      if(isClickedFood) pickedPref.add("food");
+      if(isClickedArt)  pickedPref.add("Art and museums");
+      if(isClickedSports)  pickedPref.add("sports");
+      if(isClickedEntertainment)  pickedPref.add("entertainment");
+      if(isClickedFestivals)  pickedPref.add("festivals");
+      if(isClickedGames)  pickedPref.add("Games");
+
+      print(pickedPref);
       final dio = Dio();
       final response = await dio.post("https://localhost:7167/api/Users/RegisterConsumer/",data: formData);
       print(response);
     }
-  final pickedPref = <String>[""];
+
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
         child: Scaffold(
-            backgroundColor: ColorConstant.gray50,
-            resizeToAvoidBottomInset: false,
             appBar: AppBar(
-              backgroundColor: Color.fromRGBO(144,192,206, 1),
+              backgroundColor: Colors.white38,
                 leadingWidth: 40,
                 centerTitle: true,
                 title: Text("Preference",
@@ -50,11 +63,10 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
             ),
             body: Stack(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(65, 15, 5, 30),
-                  child: const Text(
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(65, 15, 5, 30),
+                  child: Text(
                     "Please Choose Your Preferred Categories:",
-                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold
                     ),
@@ -72,48 +84,43 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            isClicked = !isClicked;
+                            isClickedFood = !isClickedFood;
                           });
                         },
                         child: Container(
                           height: 141,
                           width: 114,
                           decoration: BoxDecoration(
-                            color: isClicked
+                            color: isClickedFood
                                 ? Color.fromRGBO(133, 181, 179, 0.13)
                                 : Color.fromRGBO(1, 123, 119, 1),
                             borderRadius: BorderRadius.all(Radius.circular(50)),
-                            boxShadow: isClicked
+                            boxShadow: isClickedFood
                                 ? [
-                              BoxShadow(
-                                color: Colors.grey,
-                                blurRadius: 5,
-                                offset: Offset(0, 2),
+                              const BoxShadow(
+                                color: Colors.white,
+                                blurRadius: 1,
+                                offset: Offset(-2, 2),
                               ),
                             ]
                                 : [],
-                            border: isClicked
-                                ? Border.all(
-                              color: Colors.lightBlue,
-                              width: 2,
-                            )
-                                : Border.all(
-                              color: Color.fromRGBO(1, 123, 119, 1),
-                              width: 2,
+                            border: Border.all(
+                              color: const Color.fromRGBO(1, 123, 119, 1),
+                              width: 1,
                             ),
                           ),
                           child: Card(
                             elevation: 0,
-                            color: Color.fromRGBO(1, 123, 119, 1),
+                            color: isClickedFood ? Color.fromRGBO(1, 123, 119, 0.86) : Color.fromRGBO(1, 123, 119, 1),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                             child: Column(
                               children: <Widget>[
-                                Padding(
+                                const Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Icon(
                                     Icons.fastfood,
                                     size: 75,
-                                    color: Color.fromRGBO(203, 203, 203, 1),
+                                    color: Colors.white,
                                   ),
                                 ),
                                 Align(
@@ -122,7 +129,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                                     padding: const EdgeInsets.only(top: 3.0),
                                     child: Text(
                                       'Food',
-                                      style: GoogleFonts.poppins(fontSize: 20),
+                                      style: GoogleFonts.poppins(fontSize: 20, color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -134,34 +141,45 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
 
                       GestureDetector(
                         onTap: (){
-                          print("Art & Museum");
-                          pickedPref.add("Art & Museum");
+                          setState(() {
+                            isClickedArt = !isClickedArt;
+                          });
                         },
                         child: Container(
                             height: 141,
                             width: 114,
                             decoration: BoxDecoration(
-                              color: Color.fromRGBO(154, 194, 149, 1),
+                              color: isClickedArt
+                                  ? Color.fromRGBO(133, 181, 179, 0.13)
+                                  : Color.fromRGBO(1, 123, 119, 1),
                               borderRadius: BorderRadius.all(Radius.circular(50)),
-                              //border: Colors.black,
+                              boxShadow: isClickedArt
+                                  ? [
+                                const BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 1,
+                                  offset: Offset(-2, 2),
+                                ),
+                              ]
+                                  : [],
                               border: Border.all(
-                                color: Color.fromRGBO(154, 194, 149, 1),
-                                width: 2,
+                                color: const Color.fromRGBO(1, 123, 119, 1),
+                                width: 1,
                               ),
                             ),
 
                             child: Card(
                                 elevation: 0,
-                                color: Color.fromRGBO(154, 194, 149, 1),
+                                color: isClickedArt ? Color.fromRGBO(1, 123, 119, 0.86) : Color.fromRGBO(1, 123, 119, 1),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                                 child: Column(
                                   children: <Widget>[
-                                    Padding(
+                                    const Padding(
                                         padding: const EdgeInsets.all(10.0),
                                         child: Icon(
                                           Icons.brush,
                                           size: 75,
-                                          color: Color.fromRGBO(203, 203, 203, 1),
+                                          color: Colors.white,
                                         )
                                     ),
                                     Align(
@@ -171,7 +189,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                                         child: Text(
                                           'Art & Museums',
                                           style: GoogleFonts.poppins(
-                                              fontSize: 17
+                                              fontSize: 17,
+                                            color:  Colors.white,
                                           ),
                                         ),
                                       ),
@@ -184,34 +203,45 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
 
                       GestureDetector(
                         onTap: (){
-                          print("Sports");
-                          pickedPref.add("Sports");
+                          setState(() {
+                            isClickedSports = !isClickedSports;
+                          });
                         },
                         child: Container(
                             height: 141,
                             width: 114,
                             decoration: BoxDecoration(
-                              color: Color.fromRGBO(154, 194, 149, 1),
+                              color: isClickedSports
+                                  ? Color.fromRGBO(133, 181, 179, 0.13)
+                                  : Color.fromRGBO(1, 123, 119, 1),
                               borderRadius: BorderRadius.all(Radius.circular(50)),
-                              //border: Colors.black,
+                              boxShadow: isClickedSports
+                                  ? [
+                                const BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 1,
+                                  offset: Offset(-2, 2),
+                                ),
+                              ]
+                                  : [],
                               border: Border.all(
-                                color: Color.fromRGBO(154, 194, 149, 1),
-                                width: 2,
+                                color: const Color.fromRGBO(1, 123, 119, 1),
+                                width: 1,
                               ),
                             ),
 
                             child: Card(
                                 elevation: 0,
-                                color: Color.fromRGBO(154, 194, 149, 1),
+                                color: isClickedSports ? Color.fromRGBO(1, 123, 119, 0.86) : Color.fromRGBO(1, 123, 119, 1),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                                 child: Column(
                                   children: <Widget>[
-                                    Padding(
-                                        padding: const EdgeInsets.all(10.0),
+                                    const Padding(
+                                        padding:  EdgeInsets.all(10.0),
                                         child: Icon(
                                           Icons.sports_soccer,
                                           size: 75,
-                                          color: Color.fromRGBO(203, 203, 203, 1),
+                                          color: Colors.white,
                                         )
                                     ),
                                     Align(
@@ -221,7 +251,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                                         child: Text(
                                           'Sports',
                                           style: GoogleFonts.poppins(
-                                              fontSize: 20
+                                              fontSize: 20,
+                                            color: Colors.white
                                           ),
                                         ),
                                       ),
@@ -234,34 +265,45 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
 
                       GestureDetector(
                         onTap: (){
-
-                          pickedPref.add("Entertainment");
+                          setState(() {
+                            isClickedEntertainment = !isClickedEntertainment;
+                          });
                         },
                         child: Container(
                             height: 141,
                             width: 114,
                             decoration: BoxDecoration(
-                              color: Color.fromRGBO(154, 194, 149, 1),
+                              color: isClickedEntertainment
+                                  ? Color.fromRGBO(133, 181, 179, 0.13)
+                                  : Color.fromRGBO(1, 123, 119, 1),
                               borderRadius: BorderRadius.all(Radius.circular(50)),
-                              //border: Colors.black,
+                              boxShadow: isClickedEntertainment
+                                  ? [
+                                const BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 1,
+                                  offset: Offset(-2, 2),
+                                ),
+                              ]
+                                  : [],
                               border: Border.all(
-                                color: Color.fromRGBO(154, 194, 149, 1),
-                                width: 2,
+                                color: const Color.fromRGBO(1, 123, 119, 1),
+                                width: 1,
                               ),
                             ),
 
                             child: Card(
                                 elevation: 0,
-                                color: Color.fromRGBO(154, 194, 149, 1),
+                                color: isClickedEntertainment ? Color.fromRGBO(1, 123, 119, 0.86) : Color.fromRGBO(1, 123, 119, 1),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                                 child: Column(
                                   children: <Widget>[
-                                    Padding(
-                                        padding: const EdgeInsets.all(10.0),
+                                    const Padding(
+                                        padding: EdgeInsets.all(10.0),
                                         child: Icon(
                                           Icons.movie,
                                           size: 75,
-                                          color: Color.fromRGBO(203, 203, 203, 1),
+                                          color: Colors.white,
                                         )
                                     ),
                                     Align(
@@ -271,7 +313,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                                         child: Text(
                                           'Entertainment',
                                           style: GoogleFonts.poppins(
-                                              fontSize: 20
+                                              fontSize: 20,
+                                            color: Colors.white
                                           ),
                                         ),
                                       ),
@@ -284,35 +327,45 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
 
                       GestureDetector(
                         onTap: (){
-                          print("Festivals");
-                          pickedPref.add("Festivals");
-                          submitForm();
+                          setState(() {
+                            isClickedFestivals = !isClickedFestivals;
+                          });
                         },
                         child: Container(
                             height: 141,
                             width: 114,
                             decoration: BoxDecoration(
-                              color: Color.fromRGBO(154, 194, 149, 1),
+                              color: isClickedFestivals
+                                  ? Color.fromRGBO(133, 181, 179, 0.13)
+                                  : Color.fromRGBO(1, 123, 119, 1),
                               borderRadius: BorderRadius.all(Radius.circular(50)),
-                              //border: Colors.black,
+                              boxShadow: isClickedFestivals
+                                  ? [
+                                const BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 1,
+                                  offset: Offset(-2, 2),
+                                ),
+                              ]
+                                  : [],
                               border: Border.all(
-                                color: Color.fromRGBO(154, 194, 149, 1),
-                                width: 2,
+                                color: const Color.fromRGBO(1, 123, 119, 1),
+                                width: 1,
                               ),
                             ),
 
                             child: Card(
                                 elevation: 0,
-                                color: Color.fromRGBO(154, 194, 149, 1),
+                                color: isClickedFestivals ? Color.fromRGBO(1, 123, 119, 0.86) : Color.fromRGBO(1, 123, 119, 1),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                                 child: Column(
                                   children: <Widget>[
-                                    Padding(
+                                    const Padding(
                                         padding: const EdgeInsets.all(10.0),
                                         child: Icon(
                                           Icons.festival_rounded,
                                           size: 75,
-                                          color: Color.fromRGBO(203, 203, 203, 1),
+                                          color: Colors.white,
                                         )
                                     ),
                                     Align(
@@ -322,7 +375,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                                         child: Text(
                                           'Festivals',
                                           style: GoogleFonts.poppins(
-                                              fontSize: 20
+                                              fontSize: 20,
+                                              color: Colors.white
                                           ),
                                         ),
                                       ),
@@ -335,35 +389,45 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
 
                       GestureDetector(
                         onTap: (){
-                          print("Games");
-                          pickedPref.add("Games");
-
+                          setState(() {
+                            isClickedGames = !isClickedGames;
+                          });
                         },
                         child: Container(
                             height: 141,
                             width: 114,
                             decoration: BoxDecoration(
-                              color: Color.fromRGBO(154, 194, 149, 1),
+                              color: isClickedGames
+                                  ? Color.fromRGBO(133, 181, 179, 0.13)
+                                  : Color.fromRGBO(1, 123, 119, 1),
                               borderRadius: BorderRadius.all(Radius.circular(50)),
-                              //border: Colors.black,
+                              boxShadow: isClickedGames
+                                  ? [
+                                const BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 1,
+                                  offset: Offset(-2, 2),
+                                ),
+                              ]
+                                  : [],
                               border: Border.all(
-                                color: Color.fromRGBO(154, 194, 149, 1),
-                                width: 2,
+                                color: const Color.fromRGBO(1, 123, 119, 1),
+                                width: 1,
                               ),
                             ),
 
                             child: Card(
                                 elevation: 0,
-                                color: Color.fromRGBO(154, 194, 149, 1),
+                                color: isClickedGames ? Color.fromRGBO(1, 123, 119, 0.86) : Color.fromRGBO(1, 123, 119, 1),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                                 child: Column(
                                   children: <Widget>[
-                                    Padding(
-                                        padding: const EdgeInsets.all(10.0),
+                                    const Padding(
+                                        padding: EdgeInsets.all(10.0),
                                         child: Icon(
                                           Icons.sports_esports,
                                           size: 75,
-                                          color: Color.fromRGBO(203, 203, 203, 1),
+                                          color: Colors.white,
                                         )
                                     ),
                                     Align(
@@ -373,7 +437,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                                         child: Text(
                                           'Games',
                                           style: GoogleFonts.poppins(
-                                              fontSize: 20
+                                              fontSize: 20,
+                                            color: Colors.white
                                           ),
                                         ),
                                       ),
@@ -385,6 +450,28 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                       ),
 
                     ],
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 50.0),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      width: screenWidth * 0.7,
+                      child: ElevatedButton(
+                        onPressed: submitForm,
+                        child: Text('Submit'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          onPrimary: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            side: const BorderSide(color: Color.fromRGBO(1, 123, 119, 1),),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],
