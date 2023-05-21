@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:huddle/core/app_export.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -22,10 +23,14 @@ class CustomTextFormField extends StatelessWidget {
       this.suffix,
       this.maxLen,
       this.suffixConstraints,
-      this.validator});
+      this.onChange,
+      this.validator,
+        this.keyboardType,
+      });
 
   TextFormFieldShape? shape;
-
+  void Function(String)? onChange;
+  String? Function(String?)? validator;
   TextFormFieldPadding? padding;
 
   TextFormFieldVariant? variant;
@@ -61,8 +66,7 @@ class CustomTextFormField extends StatelessWidget {
   Widget? suffix;
 
   BoxConstraints? suffixConstraints;
-
-  FormFieldValidator<String>? validator;
+  TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +77,12 @@ class CustomTextFormField extends StatelessWidget {
           )
         : _buildTextFormFieldWidget();
   }
-
+  _keyboardType(){
+    keyboardType: TextInputType.number;
+    inputFormatters: <TextInputFormatter>[
+    FilteringTextInputFormatter.digitsOnly
+    ]; // Only numbers can be entered
+  }
   _buildTextFormFieldWidget() {
     return Container(
       width: width ?? double.maxFinite,
@@ -89,6 +98,7 @@ class CustomTextFormField extends StatelessWidget {
         maxLines: maxLines ?? 1,
         decoration: _buildDecoration(),
         validator: validator,
+        onChanged: onChange,
       ),
     );
   }
@@ -109,6 +119,7 @@ class CustomTextFormField extends StatelessWidget {
       filled: _setFilled(),
       isDense: true,
       contentPadding: _setPadding(),
+
     );
   }
 
