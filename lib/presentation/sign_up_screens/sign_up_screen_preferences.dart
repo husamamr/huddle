@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:huddle/core/app_export.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:huddle/presentation/sign_up_screens/otp_screen.dart';
 import 'package:huddle/widgets/app_bar/custom_app_bar.dart';
 
 
@@ -21,7 +22,6 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
 
   @override
   void initState() {
-    print(formData["email"]);
     super.initState();
   }
     bool isClickedFood = false;
@@ -29,22 +29,33 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
     bool isClickedSports = false;
     bool isClickedEntertainment = false;
     bool isClickedFestivals = false;
-    bool isClickedGames = false;
+    bool isClickedAdventure = false;
+    bool isClickedCafe = false;
+    bool isClickedShopping = false;
+    
     List<String> pickedPref = [];
 
-    void submitForm ()async{
+    void submitForm (){
       pickedPref = [];
-      if(isClickedFood) pickedPref.add("food");
-      if(isClickedArt)  pickedPref.add("Art and museums");
-      if(isClickedSports)  pickedPref.add("sports");
-      if(isClickedEntertainment)  pickedPref.add("entertainment");
-      if(isClickedFestivals)  pickedPref.add("festivals");
-      if(isClickedGames)  pickedPref.add("Games");
+      if(isClickedFood) pickedPref.add("Food");
+      if(isClickedArt)  pickedPref.add("Art and museum");
+      if(isClickedSports)  pickedPref.add("Sport");
+      if(isClickedEntertainment)  pickedPref.add("Entertainment");
+      if(isClickedFestivals)  pickedPref.add("Festivals");
+      if(isClickedAdventure)  pickedPref.add("Adventure");
+      if(isClickedCafe) pickedPref.add("Cafe and Coffee");
+      if(isClickedShopping) pickedPref.add("Shopping");
 
-      print(pickedPref);
-      final dio = Dio();
-      final response = await dio.post("https://localhost:7167/api/Users/RegisterConsumer/",data: formData);
-      print(response);
+
+      formData['preferences'] = pickedPref ;
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+          builder: (context) => OtpScreen(formData: formData,),
+      ),);
+      //final dio = Dio();
+      //final response = await dio.post("https://localhost:7167/api/Users/RegisterConsumer/",data: formData);
+      //print(response);
     }
 
   @override
@@ -142,68 +153,6 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                       GestureDetector(
                         onTap: (){
                           setState(() {
-                            isClickedArt = !isClickedArt;
-                          });
-                        },
-                        child: Container(
-                            height: 141,
-                            width: 114,
-                            decoration: BoxDecoration(
-                              color: isClickedArt
-                                  ? Color.fromRGBO(133, 181, 179, 0.13)
-                                  : Color.fromRGBO(1, 123, 119, 1),
-                              borderRadius: BorderRadius.all(Radius.circular(50)),
-                              boxShadow: isClickedArt
-                                  ? [
-                                const BoxShadow(
-                                  color: Colors.white,
-                                  blurRadius: 1,
-                                  offset: Offset(-2, 2),
-                                ),
-                              ]
-                                  : [],
-                              border: Border.all(
-                                color: const Color.fromRGBO(1, 123, 119, 1),
-                                width: 1,
-                              ),
-                            ),
-
-                            child: Card(
-                                elevation: 0,
-                                color: isClickedArt ? Color.fromRGBO(1, 123, 119, 0.86) : Color.fromRGBO(1, 123, 119, 1),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                                child: Column(
-                                  children: <Widget>[
-                                    const Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Icon(
-                                          Icons.brush,
-                                          size: 75,
-                                          color: Colors.white,
-                                        )
-                                    ),
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 3.0),
-                                        child: Text(
-                                          'Art & Museums',
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 17,
-                                            color:  Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                            )
-                        ),
-                      ),
-
-                      GestureDetector(
-                        onTap: (){
-                          setState(() {
                             isClickedSports = !isClickedSports;
                           });
                         },
@@ -237,7 +186,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                                 child: Column(
                                   children: <Widget>[
                                     const Padding(
-                                        padding:  EdgeInsets.all(10.0),
+                                        padding: const EdgeInsets.all(10.0),
                                         child: Icon(
                                           Icons.sports_soccer,
                                           size: 75,
@@ -250,6 +199,68 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                                         padding: const EdgeInsets.only(top: 3.0),
                                         child: Text(
                                           'Sports',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 17,
+                                            color:  Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                            )
+                        ),
+                      ),
+
+                      GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            isClickedArt = !isClickedArt;
+                          });
+                        },
+                        child: Container(
+                            height: 141,
+                            width: 114,
+                            decoration: BoxDecoration(
+                              color: isClickedArt
+                                  ? Color.fromRGBO(133, 181, 179, 0.13)
+                                  : Color.fromRGBO(1, 123, 119, 1),
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                              boxShadow: isClickedArt
+                                  ? [
+                                const BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 1,
+                                  offset: Offset(-2, 2),
+                                ),
+                              ]
+                                  : [],
+                              border: Border.all(
+                                color: const Color.fromRGBO(1, 123, 119, 1),
+                                width: 1,
+                              ),
+                            ),
+
+                            child: Card(
+                                elevation: 0,
+                                color: isClickedArt ? Color.fromRGBO(1, 123, 119, 0.86) : Color.fromRGBO(1, 123, 119, 1),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                                child: Column(
+                                  children: <Widget>[
+                                    const Padding(
+                                        padding:  EdgeInsets.all(10.0),
+                                        child: Icon(
+                                          Icons.brush,
+                                          size: 75,
+                                          color: Colors.white,
+                                        )
+                                    ),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 3.0),
+                                        child: Text(
+                                          'Art & Museum',
                                           style: GoogleFonts.poppins(
                                               fontSize: 20,
                                             color: Colors.white
@@ -328,6 +339,190 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                       GestureDetector(
                         onTap: (){
                           setState(() {
+                            isClickedCafe = !isClickedCafe;
+                          });
+                        },
+                        child: Container(
+                            height: 141,
+                            width: 114,
+                            decoration: BoxDecoration(
+                              color: isClickedCafe
+                                  ? Color.fromRGBO(133, 181, 179, 0.13)
+                                  : Color.fromRGBO(1, 123, 119, 1),
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                              boxShadow: isClickedCafe
+                                  ? [
+                                const BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 1,
+                                  offset: Offset(-2, 2),
+                                ),
+                              ]
+                                  : [],
+                              border: Border.all(
+                                color: const Color.fromRGBO(1, 123, 119, 1),
+                                width: 1,
+                              ),
+                            ),
+
+                            child: Card(
+                                elevation: 0,
+                                color: isClickedCafe ? Color.fromRGBO(1, 123, 119, 0.86) : Color.fromRGBO(1, 123, 119, 1),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                                child: Column(
+                                  children: <Widget>[
+                                    const Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Icon(
+                                          Icons.coffee,
+                                          size: 75,
+                                          color: Colors.white,
+                                        )
+                                    ),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 3.0),
+                                        child: Text(
+                                          'Cafes',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 20,
+                                              color: Colors.white
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                            )
+                        ),
+                      ),
+
+                      GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            isClickedAdventure = !isClickedAdventure;
+                          });
+                        },
+                        child: Container(
+                            height: 141,
+                            width: 114,
+                            decoration: BoxDecoration(
+                              color: isClickedAdventure
+                                  ? Color.fromRGBO(133, 181, 179, 0.13)
+                                  : Color.fromRGBO(1, 123, 119, 1),
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                              boxShadow: isClickedAdventure
+                                  ? [
+                                const BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 1,
+                                  offset: Offset(-2, 2),
+                                ),
+                              ]
+                                  : [],
+                              border: Border.all(
+                                color: const Color.fromRGBO(1, 123, 119, 1),
+                                width: 1,
+                              ),
+                            ),
+
+                            child: Card(
+                                elevation: 0,
+                                color: isClickedAdventure ? Color.fromRGBO(1, 123, 119, 0.86) : Color.fromRGBO(1, 123, 119, 1),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                                child: Column(
+                                  children: <Widget>[
+                                    const Padding(
+                                        padding: EdgeInsets.all(10.0),
+                                        child: Icon(
+                                          Icons.rocket,
+                                          size: 75,
+                                          color: Colors.white,
+                                        )
+                                    ),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 3.0),
+                                        child: Text(
+                                          'Adventure',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 20,
+                                            color: Colors.white
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                            )
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            isClickedShopping = !isClickedShopping;
+                          });
+                        },
+                        child: Container(
+                            height: 141,
+                            width: 114,
+                            decoration: BoxDecoration(
+                              color: isClickedShopping
+                                  ? Color.fromRGBO(133, 181, 179, 0.13)
+                                  : Color.fromRGBO(1, 123, 119, 1),
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                              boxShadow: isClickedShopping
+                                  ? [
+                                const BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 1,
+                                  offset: Offset(-2, 2),
+                                ),
+                              ]
+                                  : [],
+                              border: Border.all(
+                                color: const Color.fromRGBO(1, 123, 119, 1),
+                                width: 1,
+                              ),
+                            ),
+
+                            child: Card(
+                                elevation: 0,
+                                color: isClickedShopping ? Color.fromRGBO(1, 123, 119, 0.86) : Color.fromRGBO(1, 123, 119, 1),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                                child: Column(
+                                  children: <Widget>[
+                                    const Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Icon(
+                                          Icons.shopping_bag,
+                                          size: 75,
+                                          color: Colors.white,
+                                        )
+                                    ),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 3.0),
+                                        child: Text(
+                                          'Shopping',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 20,
+                                              color: Colors.white
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                            )
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: (){
+                          setState(() {
                             isClickedFestivals = !isClickedFestivals;
                           });
                         },
@@ -386,69 +581,6 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                             )
                         ),
                       ),
-
-                      GestureDetector(
-                        onTap: (){
-                          setState(() {
-                            isClickedGames = !isClickedGames;
-                          });
-                        },
-                        child: Container(
-                            height: 141,
-                            width: 114,
-                            decoration: BoxDecoration(
-                              color: isClickedGames
-                                  ? Color.fromRGBO(133, 181, 179, 0.13)
-                                  : Color.fromRGBO(1, 123, 119, 1),
-                              borderRadius: BorderRadius.all(Radius.circular(50)),
-                              boxShadow: isClickedGames
-                                  ? [
-                                const BoxShadow(
-                                  color: Colors.white,
-                                  blurRadius: 1,
-                                  offset: Offset(-2, 2),
-                                ),
-                              ]
-                                  : [],
-                              border: Border.all(
-                                color: const Color.fromRGBO(1, 123, 119, 1),
-                                width: 1,
-                              ),
-                            ),
-
-                            child: Card(
-                                elevation: 0,
-                                color: isClickedGames ? Color.fromRGBO(1, 123, 119, 0.86) : Color.fromRGBO(1, 123, 119, 1),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-                                child: Column(
-                                  children: <Widget>[
-                                    const Padding(
-                                        padding: EdgeInsets.all(10.0),
-                                        child: Icon(
-                                          Icons.sports_esports,
-                                          size: 75,
-                                          color: Colors.white,
-                                        )
-                                    ),
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 3.0),
-                                        child: Text(
-                                          'Games',
-                                          style: GoogleFonts.poppins(
-                                              fontSize: 20,
-                                            color: Colors.white
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                            )
-                        ),
-                      ),
-
                     ],
                   ),
                 ),
