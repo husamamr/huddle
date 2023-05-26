@@ -17,7 +17,7 @@ class _BottomBarState extends State<BottomBar> {
   final PageController _pageController = PageController();
   final List<Widget> _screens = [
     HomeScreen(),
-    GroupScreen(),
+    GroupScreen(userID: ""),
     SearchScreen()
   ];
 

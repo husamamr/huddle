@@ -24,7 +24,7 @@ class _SearchScreenState extends State<SearchScreen> {
             style: GoogleFonts.poppins(
               color: ColorConstant.blueGray400,
               fontWeight: FontWeight.bold,
-              fontSize: 30 ,
+              fontSize: 40 ,
             ),
           ),
         ),

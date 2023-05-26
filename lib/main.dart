@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:huddle/presentation/bottomBar/bottom_bar.dart';
 import 'package:huddle/presentation/sign_up_screens/otp_screen.dart';
 import 'package:huddle/routes/app_routes.dart';
 
@@ -54,9 +55,9 @@ class MyApp extends StatelessWidget {
       title: 'huddle',
       debugShowCheckedModeBanner: false,
 
-      // home: OtpScreen(),
-      initialRoute: AppRoutes.signUpScreen,
-      routes: AppRoutes.routes,
+      home: BottomBar(),
+      // initialRoute: AppRoutes.signUpScreen,
+      // routes: AppRoutes.routes,
     );
   }
 }
