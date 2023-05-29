@@ -25,15 +25,24 @@ class _GroupScreenState extends State<GroupScreen> {
   final ScrollController _scrollController = new ScrollController();
   Future<String> fetchGroups() async {
     // Simulating an asynchronous operation
-    // String uid = "b754ca40-77fa-ed11-9621-9828a648856e";
-    // Map <String,dynamic> test = new Map<String, dynamic>();
-    // test['userId'] = uid;
-    // final dio = Dio();
-    // String url = "https://localhost:7167/api/Groups/GetConsumerGroups/";
-    // final response = await dio.post(url,options: Options(headers: {HttpHeaders.contentTypeHeader: "application/json"}),
-    //     data: jsonEncode(uid));
-    // print(response.data);
-    return Future.delayed(Duration(seconds: 0), () => 'Data loaded successfully');
+     String uid = "b754ca40-77fa-ed11-9621-9828a648856e";
+     Map <String,dynamic> test = new Map<String, dynamic>();
+     test['userId'] = uid;
+     final dio = Dio();
+     dio.options.headers['userId'] = uid;
+     String url = "https://localhost:7167/api/Groups/GetConsumerGroups/";
+     final response = await dio.post(url,options: Options(headers: {HttpHeaders.contentTypeHeader: "application/json"}),
+     queryParameters: test);
+    List<dynamic> responseData = response.data as List<dynamic>;
+     List<GroupModel> groupDetailsList = [];
+    responseData.forEach((item) {
+      GroupModel groupDetails = GroupModel.fromJson(item);
+      groupDetailsList.add(groupDetails);
+    });
+    setState(() {
+    listOfGroups = groupDetailsList;
+    });
+    return Future.delayed(Duration(seconds: 3), () => 'Data loaded successfully');
   }
 
   @override
@@ -43,9 +52,9 @@ class _GroupScreenState extends State<GroupScreen> {
     return FutureBuilder(
         future: fetchGroups(),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+        /* if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
+          } else*/ if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
             // return Text('Data: ${snapshot.data}');
@@ -65,12 +74,13 @@ class _GroupScreenState extends State<GroupScreen> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                    shrinkWrap: true,
                     controller: _scrollController,
-                    itemCount: 3,
+                    itemCount: listOfGroups.length,
                     itemBuilder: (context, index) {
+                      GroupModel group = listOfGroups[index];
+
                       return _buildGroupListItems(
-                        groupName: "Group 1",
+                        groupName: group.name,
                       );
                     },
                   ),
@@ -82,7 +92,7 @@ class _GroupScreenState extends State<GroupScreen> {
     );
 
   }
-  Widget _buildGroupListItems({required String groupName}) {
+  Widget _buildGroupListItems({ String? groupName}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
       child: GestureDetector(
@@ -116,7 +126,7 @@ class _GroupScreenState extends State<GroupScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ListTile(
-                title: Text(groupName, style: GoogleFonts.poppins(),),
+                title: Text(groupName!, style: GoogleFonts.poppins(),),
                 trailing: const Icon(
                   Icons.arrow_forward_ios,
                   color: Color(0xFF919191),

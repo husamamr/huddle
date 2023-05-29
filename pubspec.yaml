@@ -43,6 +43,7 @@ dependencies:
   dio: ^5.1.2
   google_fonts:
   pinput:
+  geolocator: ^9.0.2
 
 dev_dependencies:
   flutter_test:
