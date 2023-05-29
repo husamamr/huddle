@@ -42,7 +42,7 @@ class _GroupScreenState extends State<GroupScreen> {
     setState(() {
     listOfGroups = groupDetailsList;
     });
-    return Future.delayed(Duration(seconds: 3), () => 'Data loaded successfully');
+    return 'Data loaded successfully';
   }
 
   @override
@@ -52,11 +52,7 @@ class _GroupScreenState extends State<GroupScreen> {
     return FutureBuilder(
         future: fetchGroups(),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        /* if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else*/ if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
+         if (snapshot.hasData) {
             // return Text('Data: ${snapshot.data}');
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,6 +84,9 @@ class _GroupScreenState extends State<GroupScreen> {
               ],
             );
           }
+         else{
+           return const Center(child: CircularProgressIndicator());
+         }
         },
     );
 

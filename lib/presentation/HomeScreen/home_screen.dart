@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
                     return Container(
-                      height: screenHeight * 0.15,
+                      height: screenHeight * 0.2,
                       width: screenWidth * 0.7,
                       margin: const EdgeInsets.only(
                           top: 10.0, bottom: 10, left: 20, right: 20),
@@ -132,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
     required String icon,
 }) {
     return SizedBox(
-      height: screenHeight * 0.15,
+      height: screenHeight * 0.25,
       width: screenWidth * 0.9,
       child: Card(
         shape: const OutlineInputBorder(
@@ -150,64 +150,63 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          name,
-                          style: GoogleFonts.poppins(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500
+                    SizedBox(
+                      width: screenWidth * 0.45,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            name,
+                            style: GoogleFonts.poppins(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                        Row(
-                          children: [
-                        Icon(Icons.star , color: rating >=1 ? Colors.yellow : Colors.grey,),
-                        Icon(Icons.star , color: rating >=2 ? Colors.yellow : Colors.grey,),
-                        Icon(Icons.star , color: rating >=3 ? Colors.yellow : Colors.grey,),
-                        Icon(Icons.star , color: rating >=4 ? Colors.yellow : Colors.grey,),
-                        Icon(Icons.star , color: rating >=4.7 ? Colors.yellow : Colors.grey,),
-                        ]
-                        )
-                      ],
+                          Row(
+                            children: [
+                          Icon(Icons.star , color: rating >=1 ? Colors.yellow : Colors.grey,),
+                          Icon(Icons.star , color: rating >=2 ? Colors.yellow : Colors.grey,),
+                          Icon(Icons.star , color: rating >=3 ? Colors.yellow : Colors.grey,),
+                          Icon(Icons.star , color: rating >=4 ? Colors.yellow : Colors.grey,),
+                          Icon(Icons.star , color: rating >=4.7 ? Colors.yellow : Colors.grey,),
+                          ]
+                          ),
+                          SizedBox(height: 20,),
+
+                          Row(
+                            children: [
+                              Icon(Icons.attach_money,color: priceRating >=1 ?Colors.green : Colors.grey,size: 15),
+                              Icon(Icons.attach_money,color: priceRating >=2 ?Colors.green : Colors.grey,size: 15),
+                              Icon(Icons.attach_money,color: priceRating >=3 ?Colors.green : Colors.grey,size: 15),
+                              SizedBox(width: 40,),
+                              Container(
+                                  alignment: Alignment.topRight,
+                                  child: Text(
+                                      isOpen ? 'Open' : 'Closed',
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: isOpen ? Colors.green : Colors.red
+                                      )
+                                  )
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     Image.network(
                       icon,
-                      width: 50,
-                      height: 50,
+                      width: screenWidth * 0.25,
+                      height: screenHeight * 0.15,
                     ),
                   ],
                 ),
               ),
-              const Divider(
-                color: Colors.grey,
-                thickness: 1.25,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.attach_money,color: priceRating >=1 ?Colors.green : Colors.grey,size: 25),
-                      Icon(Icons.attach_money,color: priceRating >=2 ?Colors.green : Colors.grey,size: 25),
-                      Icon(Icons.attach_money,color: priceRating >=3 ?Colors.green : Colors.grey,size: 25),
-                    ],
-                  ),
-                  Container(
-                      alignment: Alignment.topRight,
-                      child: Text(
-                          isOpen ? 'Open' : 'Closed',
-                          style: GoogleFonts.poppins(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: isOpen ? Colors.green : Colors.red
-                          )
-                      )
-                  ),
-                ],
-              ),
+
+
 
             ],
           ),
