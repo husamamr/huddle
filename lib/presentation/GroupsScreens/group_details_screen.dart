@@ -100,7 +100,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                   height: screenHeight * 0.15,
                   width: screenWidth * 0.7,
                   margin: const EdgeInsets.only(top: 10.0, bottom: 10, left: 20, right: 20),
-                  child: createCard(name: "PSUT Bar",isIn: true,priceRating: 2 , rating : 3.7),
+                  child: createCard(name: "PSUT Bar",isIn: true,priceRating: 2 , rating : 3.7, groupID: "gu6ughj798uihj"),
                 );
               },
             ),
@@ -155,96 +155,159 @@ class _GroupDetailsState extends State<GroupDetails> {
   Widget createCard ({
     required String name,
     required bool isIn,
-    required num priceRating ,
-    required num rating,
+    required double priceRating ,
+    required double rating,
+    required String groupID,
   }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFFfafbfc),
-        borderRadius: BorderRadius.circular(4),
-        boxShadow: const [
-          BoxShadow(
-              color: Color(0x14091e42),
-              offset: Offset(-3, 10),
-              blurRadius: 3,
-              spreadRadius: -1),
-          BoxShadow(
-              color: Color(0x19091e42),
-              offset: Offset(-4, 7),
-              blurRadius: 3,
-              spreadRadius: 0),
-        ],
-      ),
-      height: screenHeight * 0.15,
-      width: screenWidth * 0.8,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
+    return GestureDetector(
+      onTap: ()async {
+        await showDialog<void>(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Center(
+                child: Text(
+                    " Going ?!",
+                      style: GoogleFonts.poppins(
+                        fontSize: 30,
+                        color: Colors.black
+                      ),
+                ),
+              ),
+              content: SizedBox(
+                height: screenHeight * 0.08, // Set height
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(
+                            onPressed: (){
+                              print("in - $groupID");
+                              Navigator.pop(context);
+                              setState(() {});
+                            },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.resolveWith((states) => const Color(0xff008F39)),
+                          ),
+                          child: Text("IN", style: GoogleFonts.poppins(),),
+                        ),
+                        ElevatedButton(
+                            onPressed: (){
+                              print("out - $groupID");
+                              Navigator.pop(context);
+                              setState(() {});
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.resolveWith((states) => const Color(0xffC70039)),
+                            ),
+                            child: Text("OUT", style: GoogleFonts.poppins(),))
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    setState(() {});
+                  },
+                  child: Text("Cancel", style: GoogleFonts.poppins(color: Colors.black),),
+                ),
+              ],
+            );
+          },
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFFfafbfc),
+          borderRadius: BorderRadius.circular(4),
+          boxShadow: const [
+            BoxShadow(
+                color: Color(0x14091e42),
+                offset: Offset(-3, 10),
+                blurRadius: 3,
+                spreadRadius: -1),
+            BoxShadow(
+                color: Color(0x19091e42),
+                offset: Offset(-4, 7),
+                blurRadius: 3,
+                spreadRadius: 0),
+          ],
+        ),
+        height: screenHeight * 0.15,
+        width: screenWidth * 0.8,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          style: GoogleFonts.poppins(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500
+                          ),
+                        ),
+                        Row(
+                            children: [
+                              Icon(Icons.star , color: rating >=1 ? Colors.yellow : Colors.grey,),
+                              Icon(Icons.star , color: rating >=2 ? Colors.yellow : Colors.grey,),
+                              Icon(Icons.star , color: rating >=3 ? Colors.yellow : Colors.grey,),
+                              Icon(Icons.star , color: rating >=4 ? Colors.yellow : Colors.grey,),
+                              Icon(Icons.star , color: rating >=5 ? Colors.yellow : Colors.grey,),
+                            ]
+                        )
+                      ],
+                    ),
+                    Image.network(
+                      'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/bar-71.png',
+                      width: 50,
+                      height: 50,
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(
+                color: Colors.grey,
+                thickness: 1.25,
+              ),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
                     children: [
-                      Text(
-                        name,
-                        style: GoogleFonts.poppins(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500
-                        ),
-                      ),
-                      Row(
-                          children: [
-                            Icon(Icons.star , color: rating >=1 ? Colors.yellow : Colors.grey,),
-                            Icon(Icons.star , color: rating >=2 ? Colors.yellow : Colors.grey,),
-                            Icon(Icons.star , color: rating >=3 ? Colors.yellow : Colors.grey,),
-                            Icon(Icons.star , color: rating >=4 ? Colors.yellow : Colors.grey,),
-                            Icon(Icons.star , color: rating >=5 ? Colors.yellow : Colors.grey,),
-                          ]
-                      )
+                      Icon(Icons.attach_money,color: priceRating >=1 ?Colors.green : Colors.grey,size: 25),
+                      Icon(Icons.attach_money,color: priceRating >=2 ?Colors.green : Colors.grey,size: 25),
+                      Icon(Icons.attach_money,color: priceRating >=3 ?Colors.green : Colors.grey,size: 25),
                     ],
                   ),
-                  Image.network(
-                    'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/bar-71.png',
-                    width: 50,
-                    height: 50,
+                  Container(
+                      alignment: Alignment.topRight,
+                      child: Text(
+                          "IN ( 5 )     OUT  ( 6 )",
+                          style: GoogleFonts.poppins(
+                              fontSize: 12,
+                              color: isIn ? Colors.green : Colors.red
+                          )
+                      )
                   ),
                 ],
               ),
-            ),
-            const Divider(
-              color: Colors.grey,
-              thickness: 1.25,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.attach_money,color: priceRating >=1 ?Colors.green : Colors.grey,size: 25),
-                    Icon(Icons.attach_money,color: priceRating >=2 ?Colors.green : Colors.grey,size: 25),
-                    Icon(Icons.attach_money,color: priceRating >=3 ?Colors.green : Colors.grey,size: 25),
-                  ],
-                ),
-                Container(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                        "IN ( 5 )     OUT  ( 6 )",
-                        style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            color: isIn ? Colors.green : Colors.red
-                        )
-                    )
-                ),
-              ],
-            ),
 
-          ],
+            ],
+          ),
         ),
       ),
     );
