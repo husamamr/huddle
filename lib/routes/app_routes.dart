@@ -5,6 +5,7 @@ import 'package:huddle/presentation/sign_up_screens/sign_up_screen_personal_info
 import 'package:huddle/presentation/user_groups_screen/user_groups_screen.dart';
 import 'package:huddle/presentation/sign_up_screens/otp_screen.dart';
 import 'package:huddle/presentation/HomeScreen/home_screen.dart';
+import 'package:huddle/presentation/floatingActionButton/floatingButton.dart';
 
 
 class AppRoutes {

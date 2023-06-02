@@ -12,6 +12,7 @@ import '../../core/utils/size_utils.dart';
 import '../../theme/app_style.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_image_view.dart';
+import 'package:huddle/presentation/bottomBar/bottom_bar.dart';
 
 bool selected = false;
 
@@ -79,7 +80,7 @@ class _OtpScreenState extends State<OtpScreen> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => HomeScreen(),
+            builder: (context) => BottomBar(),
           ),
           (route) => false,
         );
@@ -172,6 +173,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 text: "Verify OTP",
                 margin: getMargin(top: 32),
                 onTap: (){
+                  //add navigator to home screen
                 validate();
                 },
               ),

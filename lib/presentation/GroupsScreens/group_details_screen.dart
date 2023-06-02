@@ -100,7 +100,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                   height: screenHeight * 0.15,
                   width: screenWidth * 0.7,
                   margin: const EdgeInsets.only(top: 10.0, bottom: 10, left: 20, right: 20),
-                  child: createCard(name: "PSUT Bar",isIn: true,priceRating: 2 , rating : 3.7, groupID: "gu6ughj798uihj"),
+                  child: createCard(name: "Macdonalds",isIn: true,priceRating: 2 , rating : 3.7, groupID: "gu6ughj798uihj"),
                 );
               },
             ),
