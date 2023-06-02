@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:huddle/presentation/bottomBar/bottom_bar.dart';
+import 'package:huddle/presentation/buissnesOwner/bo_inner_screens/bottom_bar_bo.dart';
 import 'package:huddle/presentation/buissnesOwner/pick_account_type.dart';
 import 'package:huddle/presentation/sign_up_screens/otp_screen.dart';
 import 'package:huddle/routes/app_routes.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       title: 'huddle',
       debugShowCheckedModeBanner: false,
 
-      home: BottomBar(),
+      home: BottomBarBO(),
       // initialRoute: AppRoutes.signUpScreen,
       // routes: AppRoutes.routes,
     );
