@@ -1,10 +1,7 @@
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../core/utils/color_constant.dart';
 import '../../data/groups/models/group_model.dart';
 import 'group_details_screen.dart';
@@ -64,7 +61,7 @@ class _GroupScreenState extends State<GroupScreen> {
                     style: GoogleFonts.poppins(
                       color: ColorConstant.blueGray400,
                       fontWeight: FontWeight.bold,
-                      fontSize: 40,
+                      fontSize: 35,
                     ),
                   ),
                 ),
@@ -77,6 +74,7 @@ class _GroupScreenState extends State<GroupScreen> {
 
                       return _buildGroupListItems(
                         groupName: group.name,
+                        isAct: index.isEven
                       );
                     },
                   ),
@@ -91,7 +89,7 @@ class _GroupScreenState extends State<GroupScreen> {
     );
 
   }
-  Widget _buildGroupListItems({ String? groupName}) {
+  Widget _buildGroupListItems({ String? groupName, required bool isAct}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
       child: GestureDetector(
@@ -105,30 +103,32 @@ class _GroupScreenState extends State<GroupScreen> {
         },
         child: Container(
           decoration: BoxDecoration(
-            color: const Color(0xFFfafbfc),
-            borderRadius: BorderRadius.circular(4),
-            boxShadow: const [
-               BoxShadow(
-                  color: Color(0x14091e42),
-                  offset: Offset(-2, 3),
-                  blurRadius: 3,
-                  spreadRadius: -1),
-               BoxShadow(
-                  color: Color(0x19091e42),
-                  offset: Offset(-3, 5),
-                  blurRadius: 3,
-                  spreadRadius: 0)
-            ],
+            color: const Color(0xfff4f5f7),
+            borderRadius: BorderRadius.circular(7),
           ),
           width: screenWidth,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ListTile(
-                title: Text(groupName!, style: GoogleFonts.poppins(),),
+                title: Row(
+                  children: [
+                    isAct ? const CircleAvatar(
+                      backgroundColor: Colors.green,
+                      radius: 5,
+                    ) : Container(),
+                    isAct ? const SizedBox(
+                      width: 5,
+                    ) : Container(),
+                    Text(groupName!, style: GoogleFonts.poppins(
+                      color: Color(0xff060606),
+                      fontSize: 16,
+                    ),),
+                  ],
+                ),
                 trailing: const Icon(
                   Icons.arrow_forward_ios,
-                  color: Color(0xFF919191),
+                  color: Color(0xff414343),
                   size: 20,
                 ),
               ),

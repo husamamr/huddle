@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       title: 'huddle',
       debugShowCheckedModeBanner: false,
 
-      home: BottomBarBO(),
+      home: BottomBar(),
       // initialRoute: AppRoutes.signUpScreen,
       // routes: AppRoutes.routes,
     );

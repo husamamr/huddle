@@ -8,6 +8,7 @@ import 'package:huddle/presentation/HomeScreen/home_screen.dart';
 import 'package:huddle/presentation/SearchScreen/search_screen.dart';
 
 import '../../core/utils/color_constant.dart';
+import '../EventsScreen/events_screen.dart';
 import '../floatingActionButton/floatingButton.dart';
 
 class BottomBar extends StatefulWidget {
@@ -24,7 +25,8 @@ class _BottomBarState extends State<BottomBar> {
   final List<Widget> _screens = [
     HomeScreen(),
     GroupScreen(userID: ""),
-    SearchScreen()
+    SearchScreen(),
+    // EventsScreen()
   ];
 
 
@@ -197,6 +199,10 @@ class _BottomBarState extends State<BottomBar> {
             icon: Icon(Icons.search_rounded, size: 35),
             label: 'Search',
           ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.celebration, size: 35),
+          //   label: 'Events',
+          // ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: ColorConstant.blueGray900,

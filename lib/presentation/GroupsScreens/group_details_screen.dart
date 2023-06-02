@@ -28,6 +28,11 @@ class _GroupDetailsState extends State<GroupDetails> {
   late double screenHeight;
   late double screenWidth;
 
+  late List<bool> inList;
+  late List<bool> outList;
+
+  bool userConfirm = false;
+
   final List<String> userLabels = ["S J", "A N", "N T", "H A" , "B A", "A T", "O A", "O A", "Z A", "S K", "D D"];
   final List<String> userNames = ["shady", "anton", "nour", "husam" , "baha", "aseel", "Othman", "Osama", "Zena", "Sosoo", "Daragmeh"];
   final List<Color> colors = const [
@@ -39,10 +44,71 @@ class _GroupDetailsState extends State<GroupDetails> {
 
 
   @override
+  void initState() {
+    super.initState();
+    inList = List<bool>.filled(6, false);
+    outList = List<bool>.filled(6, false);
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog<void>(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Are You Sure to Confirm ? '),
+                content: SizedBox(
+                  height: 150,
+                  child: Center(
+                    child: Text(
+                        "after you confirm you can’t change your status for any of the suggested places at the moment",
+                        style: GoogleFonts.poppins(
+                          color: Colors.grey,
+                        ),
+                    ),
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();},
+                    child: Text(
+                        'cancel',
+                      style: GoogleFonts.poppins(
+                        color: Colors.black,
+                        fontSize: 17,
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        userConfirm = true;
+                      });
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                        'sure',
+                      style: GoogleFonts.poppins(
+                        color: Colors.black,
+                        fontSize: 17,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        backgroundColor: Colors.green,
+        child: const Icon(Icons.check),
+      ),
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text("$groupName ( $joinID )"),
@@ -82,7 +148,7 @@ class _GroupDetailsState extends State<GroupDetails> {
             child: SizedBox(
               width: screenWidth * 0.85,
               child: const Divider(
-                color: Colors.grey,
+                color: Color(0xfff1f1f1),
                 thickness: 1.5,
               ),
             ),
@@ -97,10 +163,9 @@ class _GroupDetailsState extends State<GroupDetails> {
               itemCount: 6,
               itemBuilder: (context, index) {
                 return Container(
-                  height: screenHeight * 0.15,
                   width: screenWidth * 0.7,
                   margin: const EdgeInsets.only(top: 10.0, bottom: 10, left: 20, right: 20),
-                  child: createCard(name: "Macdonalds",isIn: true,priceRating: 2 , rating : 3.7, groupID: "gu6ughj798uihj"),
+                  child: createCard(index: index , name: "Macdonalds",priceRating: 2 , rating : 3.7, groupID: "gu6ughj798uihj"),
                 );
               },
             ),
@@ -109,6 +174,7 @@ class _GroupDetailsState extends State<GroupDetails> {
       ),
     );
   }
+  bool yes = false;
 
 
 
@@ -126,17 +192,39 @@ class _GroupDetailsState extends State<GroupDetails> {
             color: color,
             shape: BoxShape.circle,
           ),
-          child: Center(
-            child: Text(
-              label,
-              style: GoogleFonts.poppins(
-                fontSize: 20,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+          child: Stack(
+            children: [
+              Center(
+                child: Text(
+                  label,
+                  style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            ),
+              Positioned(
+                top: 0.1,
+                right: 0.1,
+                child: Container(
+                  width: 20,
+                  height: 20,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.green,
+                  ),
+                  child: const Icon(
+                    Icons.check,
+                    color: Colors.white,
+                    size: 15,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
+
         const SizedBox(
           height: 7,
         ),
@@ -154,158 +242,93 @@ class _GroupDetailsState extends State<GroupDetails> {
 
   Widget createCard ({
     required String name,
-    required bool isIn,
-    required double priceRating ,
-    required double rating,
+    bool isOpen = true,
+    double priceRating = 2,
+    double rating = 3,
     required String groupID,
+    required int index,
+    String icon = 'https://lh3.googleusercontent.com/places/ANJU3DuD8YoAv3quh7EH8cNzhR-yM_khSNtzO49OTB9mTCWQXT9vfp50qukK1i1h2NidYtuTHCpOf5IzDfSj9ZqUkDxWQkLdj3qd318=s1600-w400',
   }) {
-    return GestureDetector(
-      onTap: ()async {
-        await showDialog<void>(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Center(
-                child: Text(
-                    " Going ?!",
-                      style: GoogleFonts.poppins(
-                        fontSize: 30,
-                        color: Colors.black
-                      ),
-                ),
-              ),
-              content: SizedBox(
-                height: screenHeight * 0.08, // Set height
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ElevatedButton(
-                            onPressed: (){
-                              print("in - $groupID");
-                              Navigator.pop(context);
-                              setState(() {});
-                            },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.resolveWith((states) => const Color(0xff008F39)),
-                          ),
-                          child: Text("IN", style: GoogleFonts.poppins(),),
-                        ),
-                        ElevatedButton(
-                            onPressed: (){
-                              print("out - $groupID");
-                              Navigator.pop(context);
-                              setState(() {});
-                            },
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.resolveWith((states) => const Color(0xffC70039)),
-                            ),
-                            child: Text("OUT", style: GoogleFonts.poppins(),))
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    setState(() {});
-                  },
-                  child: Text("Cancel", style: GoogleFonts.poppins(color: Colors.black),),
-                ),
-              ],
-            );
-          },
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: const Color(0xFFfafbfc),
-          borderRadius: BorderRadius.circular(4),
-          boxShadow: const [
-            BoxShadow(
-                color: Color(0x14091e42),
-                offset: Offset(-3, 10),
-                blurRadius: 3,
-                spreadRadius: -1),
-            BoxShadow(
-                color: Color(0x19091e42),
-                offset: Offset(-4, 7),
-                blurRadius: 3,
-                spreadRadius: 0),
-          ],
+    return SizedBox(
+      width: double.infinity,
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
         ),
-        height: screenHeight * 0.15,
-        width: screenWidth * 0.8,
+        color: Colors.white,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Expanded(
+                flex: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Text(
+                      name,
+                      style: GoogleFonts.poppins(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Row(
                       children: [
-                        Text(
-                          name,
-                          style: GoogleFonts.poppins(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500
-                          ),
+                        userConfirm ? Container(): Radio(
+                          value: inOut.userIn,
+                          groupValue: inList[index] ? inOut.userIn : inOut.userOut,
+                          onChanged: (value) {
+                            setState(() {
+                              inList[index] = true;
+                              outList[index] = false;
+                            });
+                          },
+                          activeColor: inList[index] ? Colors.green : Colors.grey,
                         ),
-                        Row(
-                            children: [
-                              Icon(Icons.star , color: rating >=1 ? Colors.yellow : Colors.grey,),
-                              Icon(Icons.star , color: rating >=2 ? Colors.yellow : Colors.grey,),
-                              Icon(Icons.star , color: rating >=3 ? Colors.yellow : Colors.grey,),
-                              Icon(Icons.star , color: rating >=4 ? Colors.yellow : Colors.grey,),
-                              Icon(Icons.star , color: rating >=5 ? Colors.yellow : Colors.grey,),
-                            ]
-                        )
+                        Text('In', style: GoogleFonts.poppins(),),
+                        Text('( 5 )', style: GoogleFonts.poppins(),),
                       ],
                     ),
-                    Image.network(
-                      'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/bar-71.png',
-                      width: 50,
-                      height: 50,
+                    const SizedBox(height: 5),
+                    Row(
+                      children: [
+                        userConfirm ? Container(): Radio(
+                          value: inOut.userOut,
+                          groupValue: outList[index] ? inOut.userOut : inOut.userIn,
+                          onChanged: (value) {
+                            setState(() {
+                              inList[index] = false;
+                              outList[index] = true;
+                            });
+                          },
+                          activeColor: outList[index] ? Colors.green : Colors.grey,
+                        ),
+                        Text('Out', style: GoogleFonts.poppins()),
+                        Text('( 5 )', style: GoogleFonts.poppins()),
+                      ],
                     ),
+
+
                   ],
                 ),
               ),
-              const Divider(
-                color: Colors.grey,
-                thickness: 1.25,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.attach_money,color: priceRating >=1 ?Colors.green : Colors.grey,size: 25),
-                      Icon(Icons.attach_money,color: priceRating >=2 ?Colors.green : Colors.grey,size: 25),
-                      Icon(Icons.attach_money,color: priceRating >=3 ?Colors.green : Colors.grey,size: 25),
-                    ],
+              SizedBox(width: 16),
+              Expanded(
+                flex: 2,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    icon,
+                    fit: BoxFit.cover,
+                    width: screenWidth * 0.25,
+                    height: screenHeight * 0.15,
                   ),
-                  Container(
-                      alignment: Alignment.topRight,
-                      child: Text(
-                          "IN ( 5 )     OUT  ( 6 )",
-                          style: GoogleFonts.poppins(
-                              fontSize: 12,
-                              color: isIn ? Colors.green : Colors.red
-                          )
-                      )
-                  ),
-                ],
+                ),
               ),
-
             ],
           ),
         ),
@@ -313,3 +336,6 @@ class _GroupDetailsState extends State<GroupDetails> {
     );
   }
 }
+
+
+enum inOut { userIn, userOut }

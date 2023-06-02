@@ -72,95 +72,98 @@ class _SearchScreenState extends State<SearchScreen> {
         .of(context)
         .size
         .width;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 50, left: 20, bottom: 10),
-          child: Text(
-            "Search Page :",
-            style: GoogleFonts.poppins(
-              color: ColorConstant.blueGray400,
-              fontWeight: FontWeight.bold,
-              fontSize: 40,
+    return Container(
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 50, left: 20, bottom: 10),
+            child: Text(
+              "Explore your next adventure!",
+              style: GoogleFonts.poppins(
+                color: ColorConstant.blueGray400,
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: _textEditingController,
-                  onChanged: (value) {
-                    setState(() {
-                      searchQuery = value.toLowerCase();
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelStyle: GoogleFonts.poppins(color: Colors.grey),
-                    hintText: "Search",
-                    disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: ColorConstant.blueGray400),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _textEditingController,
+                    onChanged: (value) {
+                      setState(() {
+                        searchQuery = value.toLowerCase();
+                      });
+                    },
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: const Color(0xFFf3f3f3),
+                      labelStyle: GoogleFonts.poppins(color: Colors.grey),
+                      hintText: "Search",
+                      contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: BorderSide.none,
+                      ),
+                      prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                      suffixIcon: _showClearButton
+                          ? GestureDetector(
+                        onTap: _clearText,
+                        child: Icon(Icons.clear, color: Colors.grey),
+                      )
+                          : null,
                     ),
-                    focusColor: ColorConstant.blueGray400,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: ColorConstant.blueGray400),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: ColorConstant.blueGray400),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: ColorConstant.blueGray400),
-                    ),
-                    prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                    suffixIcon: _showClearButton
-                        ? GestureDetector(
-                      onTap: _clearText,
-                      child: Icon(Icons.clear, color: Colors.grey),
-                    )
-                        : null,
                   ),
                 ),
-              ),
-              SizedBox(width: 10),
-              // Add spacing between the TextField and button
-              TextButton(
-                onPressed: doSearch,
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.lightBlue),
-                  // Set the background color to light blue
-                  foregroundColor: MaterialStateProperty.all<Color>(
-                      Colors.white), // Set the text color to grey
+                SizedBox(width: 10),
+                // Add spacing between the TextField and button
+                TextButton(
+                  onPressed: doSearch,
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.green),
+                    // Set the background color to light blue
+                    foregroundColor: MaterialStateProperty.all<Color>(
+                        Colors.white), // Set the text color to grey
+                  ),
+                  child: const Icon(
+                    Icons.arrow_forward,
+                    color:Colors.white
+                  )
                 ),
-                child: Text(
-                  'Search',
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: listOfPlaces.length,
-            itemBuilder: (context, index) {
-              return Container(
-                width: screenWidth * 0.7,
-                margin: const EdgeInsets.only(
-                    top: 10.0, bottom: 10, left: 20, right: 20),
-                child: createCard(name: listOfPlaces[index].name ?? "name",
-                    isOpen: listOfPlaces[index].openingHours ?? false,
-                    priceRating: listOfPlaces[index].priceLevel ?? 0,
-                    rating: listOfPlaces[index].rating ?? 0,
-                    icon: listOfPlaces[index].icon ?? "p,"
-                ),
-              );
-            },
+          Expanded(
+            child: ListView.builder(
+              itemCount: listOfPlaces.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  width: screenWidth * 0.7,
+                  margin: const EdgeInsets.only(
+                      top: 10.0, bottom: 10, left: 20, right: 20),
+                  child: createCard(name: listOfPlaces[index].name ?? "name",
+                      isOpen: listOfPlaces[index].openingHours ?? false,
+                      priceRating: listOfPlaces[index].priceLevel ?? 0,
+                      rating: listOfPlaces[index].rating ?? 0,
+                      icon: listOfPlaces[index].icon ?? "p,"
+                  ),
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -172,6 +175,7 @@ class _SearchScreenState extends State<SearchScreen> {
     required double rating,
     required String icon,
   }) {
+    print(icon);
     return SizedBox(
       width: double.infinity,
       child: Card(
