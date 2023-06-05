@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../data/groups/models/groups_details_model.dart';
 
 class GroupDetails extends StatefulWidget {
   String groupID;
@@ -27,11 +32,12 @@ class _GroupDetailsState extends State<GroupDetails> {
 
   late double screenHeight;
   late double screenWidth;
-
+  bool dataFetched = false;
   late List<bool> inList;
   late List<bool> outList;
 
-  bool userConfirm = false;
+  bool userConfirm = true;
+  GroupsDetilsModel? groupsDetails;
 
   final List<String> userLabels = ["S J", "A N", "N T", "H A" , "B A", "A T", "O A", "O A", "Z A", "S K", "D D"];
   final List<String> userNames = ["shady", "anton", "nour", "husam" , "baha", "aseel", "Othman", "Osama", "Zena", "Sosoo", "Daragmeh"];
@@ -42,9 +48,26 @@ class _GroupDetailsState extends State<GroupDetails> {
     Color(0xffC10066), Color(0xff7700A1), Color(0xff0045D2) ,Color(0xff00A8FF)
   ];
 
+  Future<String> loadGroupsDetails() async {
+    try {
+      String jsonString = await rootBundle.loadString('assets/jsonExampleGroupsDetails.json');
+      final jsonData = jsonDecode(jsonString);
+      setState(() {
+        groupsDetails = GroupsDetilsModel.fromJson(jsonData);
+        userConfirm = groupsDetails!.requesterIsConfirmed == 1 ? true : false;
+        print(groupsDetails!.userInfos![0].fname);
+        print(groupsDetails!.activePlaces![0].placeDetails!.name);
+      });
+      return "success";
+    } catch (e) {
+      print('Error loading groups details: $e');
+      return e.toString();
+    }
+  }
 
   @override
   void initState() {
+    // loadGroupsDetails();
     super.initState();
     inList = List<bool>.filled(6, false);
     outList = List<bool>.filled(6, false);
@@ -56,7 +79,7 @@ class _GroupDetailsState extends State<GroupDetails> {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: userConfirm ? null :  FloatingActionButton(
         onPressed: () {
           showDialog<void>(
             context: context,
@@ -113,64 +136,75 @@ class _GroupDetailsState extends State<GroupDetails> {
         backgroundColor: Colors.black,
         title: Text("$groupName ( $joinID )"),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 15.0, top: 12),
-            child: Text(
-                "members :",
-                style: GoogleFonts.poppins(
-                  color: Colors.black,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w400
+      body: FutureBuilder(
+        future: dataFetched ? null : loadGroupsDetails(),
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+          if (snapshot.hasData) {
+            dataFetched = true;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, top: 12),
+                  child: Text(
+                    "members :",
+                    style: GoogleFonts.poppins(
+                        color: Colors.black,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w400
+                    ),
+                  ),
                 ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 12,left: 8,right: 8, bottom: 5),
-            child: SizedBox(
-              height: screenHeight * 0.13, // Adjust the height as needed
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: userLabels.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: buildUserCircle(index),
-                  );
-                },
-              ),
-            ),
-          ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 12,left: 8,right: 8, bottom: 5),
+                  child: SizedBox(
+                    height: screenHeight * 0.13, // Adjust the height as needed
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: groupsDetails!.userInfos!.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: buildUserCircle(index),
+                        );
+                      },
+                    ),
+                  ),
+                ),
 
-          Center(
-            child: SizedBox(
-              width: screenWidth * 0.85,
-              child: const Divider(
-                color: Color(0xfff1f1f1),
-                thickness: 1.5,
-              ),
-            ),
-          ),
+                Center(
+                  child: SizedBox(
+                    width: screenWidth * 0.85,
+                    child: const Divider(
+                      color: Color(0xfff1f1f1),
+                      thickness: 1.5,
+                    ),
+                  ),
+                ),
 
-          const SizedBox(
-            height: 20,
-          ),
+                const SizedBox(
+                  height: 20,
+                ),
 
-          Expanded(
-            child: ListView.builder(
-              itemCount: 6,
-              itemBuilder: (context, index) {
-                return Container(
-                  width: screenWidth * 0.7,
-                  margin: const EdgeInsets.only(top: 10.0, bottom: 10, left: 20, right: 20),
-                  child: createCard(index: index , name: "Macdonalds",priceRating: 2 , rating : 3.7, groupID: "gu6ughj798uihj"),
-                );
-              },
-            ),
-          ),
-        ],
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: groupsDetails!.activePlaces!.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        width: screenWidth * 0.7,
+                        margin: const EdgeInsets.only(top: 10.0, bottom: 10, left: 20, right: 20),
+                        child: createCard(index: index , groupID: groupID),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          }
+          else{
+            return const Center(child: CircularProgressIndicator());
+          }
+        }
       ),
     );
   }
@@ -179,9 +213,10 @@ class _GroupDetailsState extends State<GroupDetails> {
 
 
   Widget buildUserCircle(int index) {
-    String label = userLabels[index];
-    String name = userNames[index];
+    String label = groupsDetails!.userInfos![index].label ?? "XX";
+    String name = groupsDetails!.userInfos![index].fname ?? "name";
     Color color = colors[index % colors.length];
+    int isConfirm = groupsDetails!.userInfos![index].isConfirmed ?? 0;
 
     return Column(
       children: [
@@ -204,6 +239,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                   ),
                 ),
               ),
+              isConfirm == 1 ?
               Positioned(
                 top: 0.1,
                 right: 0.1,
@@ -220,7 +256,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                     size: 15,
                   ),
                 ),
-              ),
+              ) : Container(),
             ],
           ),
         ),
@@ -241,14 +277,15 @@ class _GroupDetailsState extends State<GroupDetails> {
   }
 
   Widget createCard ({
-    required String name,
-    bool isOpen = true,
-    double priceRating = 2,
-    double rating = 3,
     required String groupID,
     required int index,
-    String icon = 'https://lh3.googleusercontent.com/places/ANJU3DuD8YoAv3quh7EH8cNzhR-yM_khSNtzO49OTB9mTCWQXT9vfp50qukK1i1h2NidYtuTHCpOf5IzDfSj9ZqUkDxWQkLdj3qd318=s1600-w400',
   }) {
+    String name = groupsDetails!.activePlaces![index].placeDetails!.name ?? "Place";
+    int inCount = groupsDetails!.activePlaces![index].inCount ?? 0;
+    int outCount = groupsDetails!.activePlaces![index].inCount ?? 0;
+    String placeImage = groupsDetails!.activePlaces![index].placeDetails!.icon!;
+
+
     return SizedBox(
       width: double.infinity,
       child: Card(
@@ -278,7 +315,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                     SizedBox(height: 8),
                     Row(
                       children: [
-                        userConfirm ? Container(): Radio(
+                        userConfirm ? Container() : Radio(
                           value: inOut.userIn,
                           groupValue: inList[index] ? inOut.userIn : inOut.userOut,
                           onChanged: (value) {
@@ -290,7 +327,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                           activeColor: inList[index] ? Colors.green : Colors.grey,
                         ),
                         Text('In', style: GoogleFonts.poppins(),),
-                        Text('( 5 )', style: GoogleFonts.poppins(),),
+                        Text('( ${inCount.toString()} )', style: GoogleFonts.poppins(),),
                       ],
                     ),
                     const SizedBox(height: 5),
@@ -308,7 +345,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                           activeColor: outList[index] ? Colors.green : Colors.grey,
                         ),
                         Text('Out', style: GoogleFonts.poppins()),
-                        Text('( 5 )', style: GoogleFonts.poppins()),
+                        Text('( ${outCount.toString()} )', style: GoogleFonts.poppins()),
                       ],
                     ),
 
@@ -322,7 +359,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.network(
-                    icon,
+                    placeImage,
                     fit: BoxFit.cover,
                     width: screenWidth * 0.25,
                     height: screenHeight * 0.15,

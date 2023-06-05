@@ -30,6 +30,18 @@ class _PlaceDetailsState extends State<PlaceDetails> {
   ];
 
   String? selectedEstablishmentType;
+  int selectedIndex = 0;
+  @override
+  void initState() {
+    _establishmentNameController.text = "McDonald's";
+    _contactNumberController.text = "0792222908";
+    _ageLimitController.text = "07";
+    _locationController.text = "https://goo.gl/maps/DEiCnr7ZDv2A1hZ66";
+    _aboutController.text = "Classic, long-running fast-food chain known for its burgers & fries";
+    selectedEstablishmentType = establishmentTypes[selectedIndex];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -40,12 +52,12 @@ class _PlaceDetailsState extends State<PlaceDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 16.0),
-              Text(
+              const SizedBox(height: 16.0),
+              const Text(
                 'Establishment Name',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               TextFormField(
                 controller: _establishmentNameController,
                 decoration: InputDecoration(
@@ -61,12 +73,12 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
-              Text(
+              const SizedBox(height: 16.0),
+              const Text(
                 'Establishment Type',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -75,7 +87,9 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                   hintText: 'Select establishment type',
                 ),
                 value: selectedEstablishmentType,
-                items: establishmentTypes.map((type) {
+                items: establishmentTypes.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final type = entry.value;
                   return DropdownMenuItem<String>(
                     value: type,
                     child: Text(type),
@@ -93,12 +107,12 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
-              Text(
+              const SizedBox(height: 16.0),
+              const Text(
                 'Contact Number',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               TextFormField(
                 controller: _contactNumberController,
                 decoration: InputDecoration(
@@ -115,12 +129,12 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
-              Text(
+              const SizedBox(height: 16.0),
+              const Text(
                 'Age Limit',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               TextFormField(
                 controller: _ageLimitController,
                 decoration: InputDecoration(
@@ -137,12 +151,12 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
-              Text(
+              const SizedBox(height: 16.0),
+              const Text(
                 'Location',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               TextFormField(
                 controller: _locationController,
                 decoration: InputDecoration(
@@ -158,12 +172,12 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
-              Text(
+              const SizedBox(height: 16.0),
+              const Text(
                 'About',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               TextFormField(
                 controller: _aboutController,
                 decoration: InputDecoration(
@@ -179,7 +193,7 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -198,8 +212,9 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                 },
                 child: Text('Save'),
                 style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xff900C3F)), // Set the background color
                   fixedSize: MaterialStateProperty.all(
-                    Size.fromWidth(double.infinity),
+                    const Size.fromWidth(double.infinity),
                   ),
                 ),
               ),

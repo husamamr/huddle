@@ -31,6 +31,123 @@ class _BottomBarBOState extends State<BottomBarBO> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton:_selectedIndex == 1 ? FloatingActionButton(
+        onPressed: () {
+          showDialog<void>(
+            context: context,
+            builder: (context) {
+              String eventName = '';
+              String fromTime = '';
+              String toTime = '';
+              String dayData = '';
+              String aboutEvent = '';
+              return StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+                  return AlertDialog(
+                    title: const Text('Are You Sure to Confirm?'),
+                    content: SingleChildScrollView(
+                      child: SizedBox(
+                        height: 320,
+                        width: 700,
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              decoration: InputDecoration(labelText: 'Event Name'),
+                              onChanged: (value) {
+                                setState(() {
+                                  eventName = value;
+                                });
+                              },
+                            ),
+                            TextFormField(
+                              decoration: InputDecoration(labelText: 'From Time'),
+                              onChanged: (value) {
+                                setState(() {
+                                  fromTime = value;
+                                });
+                              },
+                            ),
+                            TextFormField(
+                              decoration: InputDecoration(labelText: 'To Time'),
+                              onChanged: (value) {
+                                setState(() {
+                                  toTime = value;
+                                });
+                              },
+                            ),
+                            TextFormField(
+                              decoration: InputDecoration(labelText: 'Day Data'),
+                              onChanged: (value) {
+                                setState(() {
+                                  dayData = value;
+                                });
+                              },
+                            ),
+                            TextFormField(
+                              decoration: InputDecoration(labelText: 'About Event'),
+                              maxLines: null,
+                              onChanged: (value) {
+                                setState(() {
+                                  aboutEvent = value;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(
+                          'Cancel',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          if (eventName.isEmpty ||
+                              fromTime.isEmpty ||
+                              toTime.isEmpty ||
+                              dayData.isEmpty ||
+                              aboutEvent.isEmpty) {
+                            // Show an error message or handle empty fields as needed
+                            return;
+                          }
+
+                          // All fields are filled, print the form data
+                          print('Event Name: $eventName');
+                          print('From Time: $fromTime');
+                          print('To Time: $toTime');
+                          print('Day Data: $dayData');
+                          print('About Event: $aboutEvent');
+
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(
+                          'Add',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          );
+
+        },
+        backgroundColor: Colors.black,
+        child: const Icon(Icons.add),
+      ) : null,
       backgroundColor: ColorConstant.gray50,
       body: PageView(
         controller: _pageController,
