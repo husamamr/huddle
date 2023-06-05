@@ -3,11 +3,14 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:huddle/data/homeScreen/home_screen_model.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 import '../../core/utils/color_constant.dart';
 import '../../data/groups/models/group_model.dart';
+import 'package:flutter/cupertino.dart';
 class HomeScreen extends StatefulWidget {
   HomeScreen();
 
@@ -23,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String userId = "b754ca40-77fa-ed11-9621-9828a648856e";
   late double latitude ;
   late double longitude ;
+  Map <String,dynamic> Body = new Map<String,dynamic>();
   Map <String,dynamic> params = new Map<String,dynamic>();
   List<GroupModel> listOfGroups = [];
 
@@ -91,6 +95,39 @@ class _HomeScreenState extends State<HomeScreen> {
     return false;
   }
 
+  Future<String> AddPlaceToGroup(String? groupId , String placeId) async {
+  print("groupId $groupId");
+  print("placeId $placeId");
+
+    Body['userId'] = 'b754ca40-77fa-ed11-9621-9828a648856e';
+    Body['groupId'] = groupId;
+    Body['placeId'] = placeId;
+    String url = "https://localhost:7167/api/Home/AddPlaceToGroup/";
+    final dio = Dio();
+    final response = dio.post(url,options: Options(headers: {HttpHeaders.contentTypeHeader: "application/json"}),
+    data: jsonEncode(Body));
+    print(response);
+    return "success";
+}
+
+  //Todo: mention what technology is used in both android studio and visual studio while mentionning swagger postman and the database server
+  //documnet the coding conventions we used , modify the implemented features and look for any features we made that are no in the document
+//make sign up page scrollable
+  dateTimePickerWidget(BuildContext context) {
+    return DatePicker.showDatePicker(
+      context,
+      dateFormat: 'dd MMMM yyyy HH:mm',
+      initialDateTime: DateTime.now(),
+      minDateTime: DateTime(2000),
+      maxDateTime: DateTime(3000),
+      onMonthChangeStartWithFirstDate: true,
+      onConfirm: (dateTime, List<int> index) {
+        DateTime selectdate = dateTime;
+        Body['hangOutDate'] = selectdate.toIso8601String() ;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -131,7 +168,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           isOpen: listOfPlaces[index].openingHours ?? false,
                           priceRating: listOfPlaces[index].priceLevel ?? 0,
                           rating: listOfPlaces[index].rating ?? 0,
-                          icon : listOfPlaces[index].icon ?? "p,"
+                          icon : listOfPlaces[index].icon ?? "p,",
+                          placeId : listOfPlaces[index].placeId ?? ""
                       ),
                     );
                   },
@@ -153,6 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
     required double priceRating ,
     required double rating,
     required String icon,
+    required String placeId,
 }) {
       return GestureDetector(
         onTap: (){
@@ -162,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
               return AlertDialog(
                 title: const Text("Choose the group :", style: TextStyle(),),
                 content: SizedBox(
-                  height: 100,
+                  height: 120,
                   child: Center(
                     child: Column(
                       children: [
@@ -186,6 +225,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                           ).toList(),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 13),
+                          child: ElevatedButton(
+
+                            onPressed: () {
+                              // TODO: Add logic to pick date and time
+                              dateTimePickerWidget(context);
+                            },
+                            child: Text('Pick Date and Time'),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -208,11 +258,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   TextButton(
                     onPressed: () {
                       // TODO: call api that add new suggest place to group
-                      if (selectedGroupId != null) {
+                      if (selectedGroupId != null && Body['hangOutDate'] !=null) {
                         // Retrieve the selected group ID and perform the necessary action
                         GroupModel selectedGroup = listOfGroups.firstWhere(
                               (group) => group.id == selectedGroupId,
                         );
+                        AddPlaceToGroup(selectedGroupId,placeId);
                         print(selectedGroup.id);
                       }
                       setState(() {

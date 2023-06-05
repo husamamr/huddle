@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:huddle/presentation/HomeScreen/home_screen.dart';
 // import 'package:pinput/pinput.dart';
 import 'package:dio/dio.dart';
+import 'package:pinput/pinput.dart';
 
 import '../../core/utils/color_constant.dart';
 import '../../core/utils/image_constant.dart';
@@ -142,32 +143,32 @@ class _OtpScreenState extends State<OtpScreen> {
                   textAlign: TextAlign.left,
                 ),
               ),
-              // Pinput(
-              //   controller: _pinPutController,
-              //   length: 6,
-              //   defaultPinTheme: PinTheme(
-              //     width: 70,
-              //     height: 70,
-              //     decoration: BoxDecoration(
-              //       border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
-              //       borderRadius: BorderRadius.circular(20),
-              //     ),
-              //   ),
-              //   focusedPinTheme: PinTheme(
-              //     width: 70,
-              //     height: 70,
-              //     decoration: BoxDecoration(
-              //       border: Border.all(color: Color.fromRGBO(114, 178, 238, 1)),
-              //       borderRadius: BorderRadius.circular(20),
-              //     ),
-              //   ),
-              //   autofocus: true,
-              //   onCompleted: (pin) {
-              //     print(pin);
-              //     selected = false;
-              //     FocusScope.of(context).requestFocus(FocusNode());
-              //   },
-              // ),
+              Pinput(
+                controller: _pinPutController,
+                length: 6,
+                defaultPinTheme: PinTheme(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                focusedPinTheme: PinTheme(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Color.fromRGBO(114, 178, 238, 1)),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                autofocus: true,
+                onCompleted: (pin) {
+                  print(pin);
+                  selected = false;
+                  FocusScope.of(context).requestFocus(FocusNode());
+                },
+              ),
               CustomButton(
                 height: getVerticalSize(50),
                 text: "Verify OTP",
