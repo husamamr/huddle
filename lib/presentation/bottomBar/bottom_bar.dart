@@ -77,6 +77,8 @@ class _BottomBarState extends State<BottomBar> {
     _pageController.jumpToPage(selectedIndex);
   }
 
+  final PageStorageBucket bucket = PageStorageBucket();
+  Widget currentScreen = HomeScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -179,36 +181,151 @@ class _BottomBarState extends State<BottomBar> {
         ],
       ): null,
       backgroundColor: ColorConstant.gray50,
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: _onPageChanged,
-        physics: const NeverScrollableScrollPhysics(),
-        children: _screens,
+      body: PageStorage(
+        child: currentScreen,
+        bucket: bucket,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home,size: 35),
-            label: ('Home'),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: const <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home,size: 35),
+      //       label: ('Home'),
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.groups,size: 35),
+      //       label: 'Groups',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.search_rounded, size: 35),
+      //       label: 'Search',
+      //     ),
+      //     // BottomNavigationBarItem(
+      //     //   icon: Icon(Icons.celebration, size: 35),
+      //     //   label: 'Events',
+      //     // ),
+      //   ],
+      //   currentIndex: _selectedIndex,
+      //   selectedItemColor: ColorConstant.blueGray900,
+      //   selectedLabelStyle: GoogleFonts.poppins(),
+      //   unselectedLabelStyle: GoogleFonts.poppins(),
+      //   onTap: _onItemTapped,
+      // ),
+
+      bottomNavigationBar: BottomAppBar(
+        color:  Colors.white,
+        notchMargin: 0,
+        child: Container(
+          height: 70,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              MaterialButton(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                minWidth: 40,
+                onPressed: () {
+                  setState(() {
+                    currentScreen =  HomeScreen();
+                    _selectedIndex = 0;
+                  });
+                },
+                //Updated
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                        Icons.home,
+                        size: 35,
+                        color: _selectedIndex == 0 ? Colors.black : Colors.grey
+                    ),
+                    Text(
+                      "Home",
+                      style: TextStyle(color: _selectedIndex == 0 ? Colors.black : Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+              MaterialButton(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                minWidth: 40,
+                onPressed: () {
+                  setState(() {
+                    currentScreen =  HomeScreen();
+                    _selectedIndex = 1;
+                  });
+                },
+                //Updated
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                        Icons.groups,
+                        size: 35,
+                        color: _selectedIndex == 1 ? Colors.black : Colors.grey
+                    ),
+                    Text(
+                      "Groups",
+                      style: TextStyle(color: _selectedIndex == 1 ? Colors.black : Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+              MaterialButton(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                minWidth: 40,
+                onPressed: () {
+                  setState(() {
+                    currentScreen =  HomeScreen();
+                    _selectedIndex = 2;
+                  });
+                },
+                //Updated
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                        Icons.search_rounded,
+                        size: 35,
+                        color: _selectedIndex == 2 ? Colors.black : Colors.grey
+                    ),
+                    Text(
+                      "Search",
+                      style: TextStyle(color: _selectedIndex == 2 ? Colors.black : Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+              MaterialButton(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                minWidth: 40,
+                onPressed: () {
+                  setState(() {
+                    currentScreen =  HomeScreen();
+                    _selectedIndex = 3;
+                  });
+                },
+                //Updated
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                        Icons.celebration,
+                        size: 35,
+                        color: _selectedIndex == 3 ? Colors.black : Colors.grey
+                    ),
+                    Text(
+                      "Events",
+                      style: TextStyle(color: _selectedIndex == 3 ? Colors.black : Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.groups,size: 35),
-            label: 'Groups',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search_rounded, size: 35),
-            label: 'Search',
-          ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.celebration, size: 35),
-          //   label: 'Events',
-          // ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: ColorConstant.blueGray900,
-        selectedLabelStyle: GoogleFonts.poppins(),
-        unselectedLabelStyle: GoogleFonts.poppins(),
-        onTap: _onItemTapped,
+        ),
       ),
     );
   }
