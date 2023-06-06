@@ -45,6 +45,8 @@ dependencies:
   pinput:
   geolocator: ^9.0.2
   flutter_cupertino_datetime_picker: ^3.0.0
+  flutter_datetime_picker:
+  animated_splash_screen:
 
 dev_dependencies:
   flutter_test:

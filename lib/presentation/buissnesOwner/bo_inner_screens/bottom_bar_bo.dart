@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/utils/color_constant.dart';
+import '../../../data/text_field_time_picker.dart';
+import '../../../text_field_date_picker.dart';
 import './place_details.dart';
 import './place_events.dart';
 class BottomBarBO extends StatefulWidget {
@@ -33,6 +35,7 @@ class _BottomBarBOState extends State<BottomBarBO> {
     return Scaffold(
       floatingActionButton:_selectedIndex == 1 ? FloatingActionButton(
         onPressed: () {
+          final _formKey = GlobalKey<FormState>();
           showDialog<void>(
             context: context,
             builder: (context) {
@@ -47,52 +50,98 @@ class _BottomBarBOState extends State<BottomBarBO> {
                     title: const Text('Are You Sure to Confirm?'),
                     content: SingleChildScrollView(
                       child: SizedBox(
-                        height: 320,
+                        height: 450,
                         width: 700,
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              decoration: InputDecoration(labelText: 'Event Name'),
-                              onChanged: (value) {
-                                setState(() {
-                                  eventName = value;
-                                });
-                              },
-                            ),
-                            TextFormField(
-                              decoration: InputDecoration(labelText: 'From Time'),
-                              onChanged: (value) {
-                                setState(() {
-                                  fromTime = value;
-                                });
-                              },
-                            ),
-                            TextFormField(
-                              decoration: InputDecoration(labelText: 'To Time'),
-                              onChanged: (value) {
-                                setState(() {
-                                  toTime = value;
-                                });
-                              },
-                            ),
-                            TextFormField(
-                              decoration: InputDecoration(labelText: 'Day Data'),
-                              onChanged: (value) {
-                                setState(() {
-                                  dayData = value;
-                                });
-                              },
-                            ),
-                            TextFormField(
-                              decoration: InputDecoration(labelText: 'About Event'),
-                              maxLines: null,
-                              onChanged: (value) {
-                                setState(() {
-                                  aboutEvent = value;
-                                });
-                              },
-                            ),
-                          ],
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                decoration: InputDecoration(labelText: 'Event Name'),
+                                onChanged: (value) {
+                                  setState(() {
+                                    eventName = value;
+                                  });
+                                },
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return "This field is required";
+                                  }
+                                },
+                              ),
+                              SizedBox(height: 10,),
+                              SizedBox(
+                                width: 600,
+                                child: TextFieldTimePicker(
+                                  fullWidth: false,
+                                  suffixIcon: Icon(Icons.access_time),
+                                  labelText: "From Time",
+                                  initialTime: null,
+                                  validatorCallBack: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "This field is required";
+                                    }
+                                  },
+                                  onTimeChanged: (value) {
+                                    fromTime = value == null ? "" : value.toString();
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: 10,),
+                              SizedBox(
+                                width: 600,
+                                child: TextFieldTimePicker(
+                                  fullWidth: false,
+                                  suffixIcon: Icon(Icons.access_time),
+                                  labelText: "To Time",
+                                  initialTime: null,
+                                  validatorCallBack: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "This field is required";
+                                    }
+                                  },
+                                  onTimeChanged: (value) {
+                                    toTime = value == null ? "" : value.toString();
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: 10,),
+                              SizedBox(
+                                width: 600,
+                                child: TextFieldDatePicker(
+                                  fullWidth: false,
+                                  suffixIcon: const Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Icon(Icons.calendar_month)
+                                  ),
+                                  labelText: "Event Date",
+                                  firstDate: DateTime(DateTime.now().year - 100),
+                                  lastDate: DateTime(DateTime.now().year + 100),
+                                  initialDate: null,
+                                  validatorCallBack: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "This field is required";
+                                    }
+                                  },
+                                  onDateChanged: (value) {
+                                    setState(() {
+                                      dayData = value.toString();
+                                    });
+                                  },
+                                ),
+                              ),
+
+                              TextFormField(
+                                decoration: InputDecoration(labelText: 'About Event'),
+                                maxLines: null,
+                                onChanged: (value) {
+                                  setState(() {
+                                    aboutEvent = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -111,11 +160,7 @@ class _BottomBarBOState extends State<BottomBarBO> {
                       ),
                       TextButton(
                         onPressed: () {
-                          if (eventName.isEmpty ||
-                              fromTime.isEmpty ||
-                              toTime.isEmpty ||
-                              dayData.isEmpty ||
-                              aboutEvent.isEmpty) {
+                          if (_formKey.currentState!.validate() == false ) {
                             // Show an error message or handle empty fields as needed
                             return;
                           }

@@ -6,7 +6,7 @@ import 'package:huddle/presentation/buissnesOwner/bo_inner_screens/bottom_bar_bo
 import 'package:huddle/presentation/buissnesOwner/pick_account_type.dart';
 import 'package:huddle/presentation/sign_up_screens/otp_screen.dart';
 import 'package:huddle/routes/app_routes.dart';
-
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'data/sign_up_repo/sign_up_repo.dart';
 
 
@@ -32,8 +32,16 @@ class MyApp extends StatelessWidget {
       title: 'huddle',
       debugShowCheckedModeBanner: false,
 
-      home: GroupDetails(groupID: "sdsd", joinID: "# 1111", groupName: "uni"),
+      //home: GroupDetails(groupID: "sdsd", joinID: "# 1111", groupName: "uni"),
       // home: BottomBarBO(),
+      home: AnimatedSplashScreen(
+        splash: 'assets/images/spl2.png',
+        backgroundColor: Colors.black,
+        duration: 2000,
+        splashIconSize: 400,
+        nextScreen: BottomBarBO(),
+        splashTransition: SplashTransition.fadeTransition,
+      ),
       // initialRoute: AppRoutes.signUpScreen,
       // routes: AppRoutes.routes,
     );
